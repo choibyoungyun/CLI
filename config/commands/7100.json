@@ -1,0 +1,61 @@
+{
+    "name" : "7100",
+    "request" : {
+        "header" : {
+            "MsgName" : "7100",
+            "MsgType" : 1,
+            "CmdID"   : 7100,
+            "Key"     : 0
+        },
+
+        "body"  : {
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgName" : "7100",
+            "MsgType" : 0,
+            "CmdID"   : 7100,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "LOC"   : "EMS1",
+            "SUBID" : "84",
+            "INF"   : "2018-10-23 10:32:08",
+            "DATA1" : "10 Min"
+        }
+    },
+
+    "display" : {
+        "help"   : {
+            "comment1" : "\t SERVER REPORT\n"
+        },
+
+        "field"   : { "COL1": "LOC", "COL2":"SUBID", "COL3":"INF", "COL4":"DATA1"},
+        "success" : {
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t-------------------------------------------------\n",
+            "line2"    : {"format" : "\t{0:<6s} {1:<8s} {2:<20s}\n",
+                          "value"  : "display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3"},
+            "comment2" : "\t-------------------------------------------------\n",
+            "line3"    : {"format" : "\t{0:<6s} {1:<8s} {2:<20s}\n",
+                          "value"  : "response.body.LOC,
+                                      response.body.SUBID,
+                                      response.body.INF"},
+            "comment3" : "\t--------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "line"  : {
+                "format" : "{0}",
+                "value"  : "$MESSAGE"
+            }
+        }
+    }
+}

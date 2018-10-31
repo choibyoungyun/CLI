@@ -1,0 +1,60 @@
+{
+    "name" : "1600",
+    "request" : {
+        "header" : {
+            "MsgName" : "1600",
+            "MsgType" : 1,
+            "CmdID"   : 1600,
+            "Key"     : 0
+        },
+
+        "body"  : {
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgName" : "1600",
+            "MsgType" : 0,
+            "CmdID"   : 1600,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "LOC"   : "EMS1",
+            "INF"   : "84",
+            "ALM_ON": {"default" : "NONE"}
+        }
+    },
+
+    "display" : {
+        "help"   : {
+            "comment1" : "\t SERVER REPORT\n"
+        },
+
+        "field"   : { "COL1": "LOC", "COL2":"INF", "COL3":"ALM_ON"},
+        "success" : {
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------\n",
+            "line2"    : {"format" : "\t{0:<6s} {1:<10s} {2:<20s}\n",
+                          "value"  : "display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3"},
+            "comment3" : "\t---------------------------------------------\n",
+            "line3"    : {"format" : "\t{0:<6s} {1:<10s} {2:<20s}\n",
+                          "value"  : "response.body.LOC,
+                                      response.body.INF,
+                                      response.body.ALM_ON"},
+            "comment4" : "\t---------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "line"  : {
+                "format" : "{0}",
+                "value"  : "$MESSAGE"
+            }
+        }
+    }
+}

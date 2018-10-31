@@ -1,0 +1,70 @@
+{
+    "name"     : "HELP",
+    "grade"    : 0,
+    "scope"    : 1,
+    "request"  :
+    {
+        "header"       : {"MsgType" : 0, "CmdID" : 0 , "Key":  0, "result" : 0 },
+        "body"         : {"COMMAND": {"required":"FALSE",  "type": "STRING"}}
+    },
+    "response"         :
+    {
+        "header"       : {"MsgType"  : 0, "CmdID" : 0 , "Key":  0, "result" : 0 },
+        "body"         :
+        {
+            "BRIEF"    : [{"NAME" : "CMD",
+                           "DESC" : "APSG0"}],
+            "DETAIL"   : "ON"
+        }
+    },
+    "display"  :
+    {
+        "help_brief"   : "HELP         : [COMMAND=command_name]",
+        "help_detail"  :
+        {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage  : help:command=[cmd_name]\n",
+            "comment5" : "\t--------------------------------------------\n",
+            "comment6" : "COMPLETED \n"
+        },
+
+        "detail" :
+        {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}\n",
+                          "value" : "response.body.DETAIL"}
+        },
+
+        "brief" :
+        {
+            "comment0" : "\n",
+            "line1" : {"format" : "{0}    {1}\n",
+                       "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.BRIEF",
+                "line2"  : {
+                    "format" : "\t {0:>16s}                {1:s} \n",
+                    "value"  : "response.body.BRIEF.NAME,
+                                response.body.BRIEF.DESC"
+                }
+            },
+            "comment98" : "\t--------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
+        },
+
+        "failure" :
+        {
+            "comment0" : "\n",
+            "line1" : {"format" : "{0}    {1}\n",
+                       "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "line2"     : {"format" : "\tERROR : {0}\n",
+                           "value"  : "$ERROR"},
+            "comment98" : "\t--------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
+        }
+    }
+}

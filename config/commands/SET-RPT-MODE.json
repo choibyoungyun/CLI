@@ -1,0 +1,52 @@
+{
+    "name"     : "SET-RPT-MODE",
+    "grade"    : 0,
+    "scope"    : 1,
+    "request"  :
+    {
+        "header" : {"MsgType" : 0, "CmdID" : 0 , "Key":  0, "result" : 0 },
+        "body"   : {"MODE": {"required":"TRUE",  "type": "STRING"}}
+    },
+    "response" :
+    {
+        "header" : {"MsgType" : 0, "CmdID" : 0 , "Key":  0, "result" : 0 },
+        "body"   : {"MESSAGE" : "ON"}
+    },
+    "display"  :
+    {
+        "help_brief"   : "SET-RPT-MODE : MODDE=ON|OFF",
+        "help_detail"  : {
+            "line1"    : {"format": "{0}    {1}\n",
+                          "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage  : alarm on|off\n",
+            "comment3" : "\tON  - enable  EMS REPORT notification \n",
+            "comment4" : "\tOFF - disable EMS REPORT notification \n",
+            "comment5" : "\t--------------------------------------------\n",
+            "comment6" : "COMPLETED \n"
+        },
+
+        "success" :
+        {
+            "comment0" : "\n",
+            "line1" : {"format" : "{0}    {1}\n",
+                       "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "line2"     : {"format" : "\tCURRENT REPORT MODE : {0}\n",
+                           "value"  : "response.body.MESSAGE"},
+            "comment98" : "\t--------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
+        },
+        "failure" :
+        {
+            "comment0" : "\n",
+            "line1" : {"format" : "{0}    {1}\n",
+                       "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "line2"     : {"format" : "\tERROR : {0}\n",
+                           "value"  : "$ERROR"},
+            "comment98" : "\t--------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
+        }
+    }
+}

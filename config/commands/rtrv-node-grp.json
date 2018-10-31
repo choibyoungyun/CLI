@@ -1,0 +1,75 @@
+{
+    "name"     : "RTRV-NODE-GRP",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10104,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA": {"required":"TRUE",  "type": "int",    "default":1},
+            "NODE": {"required":"FALSE", "type": "string", "default":"3"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 3501,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "array"   : [{"AREA" : 1,
+                          "GRP_NAME" : "APSG0",
+                          "GRP_NO" : 4183,
+                          "NODE_TYPE": "APS",
+                          "REDUN_TYPE":"1:1"}]
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "RTRV-NODE-GRP: [AREA(I)],[NAME]",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-NODE-GRP : [node_index]\n",
+            "comment3" : "\tnode_index : TAS NODE INDEX\n",
+            "comment4" : "\t--------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "success" : {
+            "line1" : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "line2" : {"format" : "{0}    \n", "value" : "$RAW_RESPONSE"},
+            "line3" : {"format" : "{0}    \n", "value" : "$RAW_REQUEST"},
+            "line3" : {"format" : "{0}    \n", "value" : "$COMMAND"},
+            "comment1" : "\tAREA   GRP_NAME   GRP_NO    NODE_TYPE  REDUN_TYPE\n",
+            "comment2" : "\t-------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>4d} {1:>8s}      {2:>4d} {3:>8s}        {4:>5s}\n",
+                    "value"  : "response.body.array.AREA,
+                                response.body.array.GRP_NAME,
+                                response.body.array.GRP_NO,
+                                response.body.array.NODE_TYPE,
+                                response.body.array.REDUN_TYPE"
+                }
+            },
+            "comment3" : "\t-------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "line"  : {
+                "format" : "{0}",
+                "value"  : "$MESSAGE"
+            }
+        }
+    }
+}

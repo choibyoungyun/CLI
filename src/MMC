@@ -1,0 +1,126 @@
+#!/usr/bin/python3
+
+import asyncio
+import aioconsole
+import time
+import logging
+import json
+import os
+import sys
+import signal
+
+
+CLI_COMMAND_IP      = "127.0.0.1"
+CLI_COMMAND_PORT    = 5760
+
+MAX_CMD_RESPONSE_LEN= 4096
+
+
+async def login_command (reader, writer):
+    id = input("login:" )
+    secret = input("password:" )
+
+    login_command = "login:id=" + id + "," + "passwd=" + secret + ";"
+    writer.write (login_command.encode("utf-8"))
+    data = await reader.read(4096)
+    logging.debug ('recv login response {} .'.format(data))
+
+    response_dict = json.loads(data.decode())
+    print ("{}".format(response_dict['value']))
+    if response_dict['result'] != "OK":
+        writer.close()
+
+
+
+class OPTerminal ():
+    def __init__ (self):
+        self.writer     = None
+        self.reader     = None
+        self.connection = False
+        self.is_exit    = False
+        signal.signal(signal.SIGINT, self.sig_handler)
+
+    def sig_handler (self, signum, frame):
+        if self.writer is not None:
+            try:
+                self.writer.close()
+            except :
+                pass
+        sys.exit()
+
+    async def open_connection (self):
+        while self.is_exit is False:
+            self.connection = False
+            try :
+                self.reader, self.writer = \
+                    await asyncio.open_connection (CLI_COMMAND_IP, \
+                                                   CLI_COMMAND_PORT)
+                self.connection = True
+                print ("SUCC, SERVER CONNECTION ({0}, {1})"\
+                        .format (CLI_COMMAND_IP, CLI_COMMAND_PORT))
+                break;
+            except Exception as ex:
+                await asyncio.sleep(1.0)
+                continue
+
+    async def handle_user_output (self):
+        server = '{} {}'.format(CLI_COMMAND_IP, CLI_COMMAND_PORT)
+        while self.is_exit is False:
+            await self.open_connection ()
+            while self.connection is True:
+                try :
+                    data = None
+                    data = await self.reader.read(MAX_CMD_RESPONSE_LEN)
+                    if data is None or len(data) == 0:
+                        break
+                except Exception as ex:
+                    print (ex)
+                    break
+
+                try :
+                    response_dict = json.loads(data.decode())
+                    print ("{}".format(response_dict['value']))
+                except Exception as ex:
+                    continue
+
+            self.writer.close()
+            self.connection = False
+
+    async def handle_user_input (self):
+        while self.is_exit is False:
+            command = None
+            command = await aioconsole.ainput ('CMD>>')
+            if not command:
+                continue
+            if command.split()[0] == "exit" or command.split()[0] == "quit" :
+                os._exit(1)
+
+            if command.split()[0] == "clear":
+                os.system('cls||clear')
+                continue
+
+            # write command to server && flush buffer
+            if self.connection is False:
+                print ("fail, disconnect CLI SERVER")
+                continue
+            try :
+                self.writer.write (command.strip().encode())
+                await self.writer.drain()
+            except Exception as ex:
+                continue
+
+
+    async def run_client (self):
+        coros = [self.handle_user_input(), self.handle_user_output()]
+        await asyncio.gather (*coros)
+
+
+def main():
+    client = OPTerminal()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete (client.run_client())
+    loop.close()
+
+if __name__ == '__main__':
+    main ()
+

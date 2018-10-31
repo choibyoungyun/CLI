@@ -1,0 +1,60 @@
+#!/usr/bin/python3
+
+import asyncio
+import os
+import sys
+import logging
+
+from JDIN.CLI import nms
+from JDIN.CLI import operator
+from JDIN import config
+from JDIN import logger
+from JDIN import util
+
+def init_logger ():
+    try:
+        pkg_root = util.get_pkg_home()
+        pname    = os.path.basename(sys.argv[0])
+
+        if pkg_root is None:
+            print ("ERR: UNSET ENV VARIABLE (PKG_HOME)")
+            return False
+        conf_fname = pkg_root.rstrip('/') + "/config/" + pname + ".INI"
+    except Exception as ex:
+        print (ex)
+        return False
+
+    trace = logging.getLogger()
+    log = logger.Logger (trace, pname)
+    log.setup(conf_fname)
+
+    return True
+
+
+def ask_exit(signum):
+    loop.stop()
+    loop.close()
+
+def main ():
+    init_logger ()
+    try :
+
+        loop = asyncio.get_event_loop()
+
+        # operator client
+        op = operator.OPJob (loop)
+        op.set_config (os.path.basename(sys.argv[0]))
+        op.do_job()
+
+        #nms_client = JDINCLI.nms.NMSJob (8082, 8083, 8084, 8085, 8086)
+        #nms_client.do_job (loop)
+
+        loop.run_forever()
+
+    except Exception as ex:
+        print ("fail, {}".format(ex))
+    finally :
+        loop.close()
+
+if __name__ == '__main__':
+    main ()

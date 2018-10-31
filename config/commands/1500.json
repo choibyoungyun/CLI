@@ -1,0 +1,57 @@
+{
+    "name" : "1500",
+    "request" : {
+        "header" : {
+            "MsgName" : "1500",
+            "MsgType" : 0,
+            "CmdID"   : 1500,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "array": [{"NODE":"UNKNOWN"}]
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgName" : "1500",
+            "MsgType" : 0,
+            "CmdID"   : 1500,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "array": [{"NODE":"KNOWN", "ACTSTS": {"default" : "ACT"}, "GRADE":{"default" : "NORMAL"}, "USER": {"default":"0.5"}, "SYS": {"default": "1"}, "CPU_LOAD":{default:"2"}}]
+        }
+    },
+
+    "display" : {
+        "help"   : {
+            "comment1" : "\t SERVER REPORT\n"
+        },
+
+        "success" : {
+            "line1" : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\tAREA    \n",
+            "comment2" : "\t--------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>8s}\n",
+                    "value"  : "response.body.array.NODE"
+                }
+            },
+            "comment3" : "\t-----------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "line"  : {
+                "format" : "{0}",
+                "value"  : "$MESSAGE"
+            }
+        }
+    }
+}
