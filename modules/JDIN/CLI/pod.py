@@ -42,6 +42,14 @@ POD_KEYWORD_VALUE       = 'value'
 # value operartor
 # -------------------------------------------------------------------
 POD_KEYWORD_DEFAULT          = 'default'
+
+# casting data type
+POD_KEYWORD_VALUE_TYPE       = 'type'
+POD_KEYWORD_VALUE_STRING      = 'string'
+POD_KEYWORD_VALUE_INTEGER     = 'int'
+POD_KEYWORD_VALUE_FLOAT       = 'float'
+
+# madatory filed
 POD_KEYWORD_MANDATORY        = 'mandatory'
 POD_KEYWORD_CONSTRAINTS      = 'constraints'
 POD_KEYWORD_CONSTRAINTS_ENUM = 'enum'
@@ -320,28 +328,43 @@ class CommandDictionary ():
 
 
     # -------------------------------------------------------------------
-    #  DISPLAY API
+    #  NOTIFICATION API
     # -------------------------------------------------------------------
-    def __get_reserved_value (self, keyword):
-        """
-        name   : __get_reserved_value
-        param  : keyword      (keyword string
-        return : value
-        """
-        if keyword == "$TIME":
-            return time.asctime(time.localtime())
-        elif keyword == "$NODE_NAME":
-            return self.__node
-        elif keyword == "$RAW_RESPONSE":
-            return self.get_pod_response_raw()
-        elif keyword == "$RAW_REQUEST":
-            return self.get_pod_request_raw()
-        elif keyword == "$COMMAND":
-            return self.get_pod_command()
-        elif keyword == "$ERROR":
-            return self.__error_string()
-        else:
-            return "NULL"
+    def __set_pod_notify_value (self, dictionary, in_value):
+        try :
+            value = None
+            if in_value is None:
+                if type (dictionary) is dict:
+                    if POD_KEYWORD_DEFAULT in dictionary.keys():
+                        value = dictionary[POD_KEYWORD_DEFAULT]
+                    else :
+                        self.__error_string += \
+                                "fail, undefined notification key in msg"
+                        trace.error (self.__error_string)
+                        return None
+            else :
+                value = in_value
+
+            if type (dictionary) is dict :
+                if POD_KEYWORD_VALUE_TYPE in dictionary.keys():
+                    field_type = dictionary[POD_KEYWORD_VALUE_TYPE]
+                    if field_type.lower() == POD_KEYWORD_VALUE_STRING:
+                        return str(value)
+                    elif field_type.lower() == POD_KEYWORD_VALUE_INTEGER:
+                        return int(value)
+                    elif field_type.lower() == POD_KEYWORD_VALUE_FLOAT:
+                        return float(value)
+                    else:
+                        return value
+            return value
+        except Exception as ex:
+            self.__error_string += \
+                    "fail, set notification value {0}".format(in_value)
+            self.__error_string += "[exception [name:{0}, args:{1}]"\
+                                    .format(type(ex).__name__, ex.args)
+            trace.error (self.__error_string)
+            return None
+
 
 
     def __set_pod_notify_table (self, template, src):
@@ -351,16 +374,13 @@ class CommandDictionary ():
             for row in src:
                 item = dict()
                 for key in dictionary.keys():
-                    if key in row.keys():
-                        item[key] = row[key]
-                    else :
-                        if type (dictionary[key]) is dict:
-                            if POD_KEYWORD_DEFAULT in dictionary[key].keys():
-                                item[key] = dictionary[key][POD_KEYWORD_DEFAULT]
-                            else :
-                                item[key] = None
-                        else :
-                            item[key] = None
+                    value = None
+                    if key is row.keys():
+                        value = row[key]
+                    item[key] = self.__set_pod_notify_value (dictionary[key],
+                                                             value)
+                    if item[key] is None:
+                        return None
                 dest.append(item)
             return dest
         except Exception as ex:
@@ -384,20 +404,17 @@ class CommandDictionary ():
                                                               in_dict[key])
                         if lvalue is None:
                             return False
-                        template [key] = lvalue
+                        template[key] = lvalue
                     else:
-                        template[key]  = in_dict[key]
+                        template[key] = \
+                                self.__set_pod_notify_value (template[key],
+                                                             in_dict[key])
                 else :
-                    if type (template[key]) is dict \
-                        and POD_KEYWORD_DEFAULT in template[key].keys():
-                            template[key] = template[key][POD_KEYWORD_DEFAULT]
-                    else :
-                        self.__error_string += \
-                                "fail, undefined notification key in msg[{0}]"\
-                                .format(key)
-                        trace.error (self.__error_string)
-                        template[key] = None
-                        return False
+                    template[key] = \
+                            self.__set_pod_notify_value (template[key],
+                                                         None)
+                if template[key] is None:
+                    return False
             return True
         except Exception as ex:
             self.__error_string += "fail, set notification"
@@ -405,6 +422,32 @@ class CommandDictionary ():
                                     .format(type(ex).__name__, ex.args)
             trace.error (self.__error_string)
             return False
+
+
+    # -------------------------------------------------------------------
+    #  DISPLAY API
+    # -------------------------------------------------------------------
+    def __get_reserved_value (self, keyword):
+        """
+        name   : __get_reserved_value
+        param  : keyword      (keyword string
+        return : value
+        """
+        if keyword == "$TIME":
+            return time.asctime(time.localtime())
+        elif keyword == "$NODE_NAME":
+            return self.__node
+        elif keyword == "$RAW_RESPONSE":
+            return self.get_pod_response_raw()
+        elif keyword == "$RAW_REQUEST":
+            return self.get_pod_request_raw()
+        elif keyword == "$COMMAND":
+            return self.get_pod_command()
+        elif keyword == "$ERROR":
+            return self.__error_string()
+        else:
+            return "NULL"
+
 
 
 
