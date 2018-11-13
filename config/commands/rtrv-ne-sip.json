@@ -1,0 +1,149 @@
+{
+    "name"     : "RTRV-NE-SIP",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10274,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA" : {"mandatory":"FALSE", "type": "int"},
+            "NAME" : {"mandatory":"FALSE", "type": "string"},
+            "TYPE" : {"mandatory":"FALSE", "type": "string", "constraints" : {"enum": "CSCF,ICSCF,SEC"}}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10274,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""},
+            "array"   : [{"ID"         : {"type":"int",    "default":"-1"},
+                          "NAME"       : {"type":"string", "default":"NONE"},
+                          "TYPE"       : {"type":"int",    "default":"-1"},
+                          "IPv4_FLAG"  : {"type":"int",    "default":"-1"},
+                          "IPv4"       : {"type":"string", "default":"NONE"},
+                          "PORT4"      : {"type":"string", "default":"NONE"},
+                          "TRP4"       : {"type":"int",    "default":"-1"},
+                          "IPv6_FLAG"  : {"type":"int",    "default":"-1"},
+                          "IPv6"       : {"type":"string", "default":"NONE"},
+                          "PORT6"      : {"type":"string", "default":"NONE"},
+                          "TRP6"       : {"type":"int",    "default":"-1"},
+                          "AUDIT_INTVL": {"type":"int",    "default":"-1"},
+                          "AUDIT_TOT"  : {"type":"int",    "default":"-1"},
+                          "LASTUPDATE" : {"type":"string", "default":"NONE"},
+                          "ADMSTS"     : {"type":"int",    "default":"-1"},
+                          "ADMSTS_STR" : {"type":"string", "default":"NONE"},
+                          "OPRSTS"     : {"type":"int",    "default":"-1"},
+                          "OPRSTS_STR" : {"type":"string", "default":"NONE"}}]
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "[AREA(I)],[NAME],[TYPE]",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-NE-SIP : [AREA=num],[NAME=string],[TYPE=string]\n",
+            "comment3" : "\tAREA       : AREA INDEX \n",
+            "comment4" : "\tNAME       : SEC        \n",
+            "comment5" : "\tTYPE       : CSCF|ICSCF|SEC\n",
+            "comment6" : "\t---------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL0" : "ID", 
+                      "COL1" : "NAME", 
+                      "COL2" : "TYPE", 
+                      "COL3" : "IPv4_FLAG", 
+                      "COL4" : "IPv4", 
+                      "COL5" : "PORT4", 
+                      "COL6" : "TRP4", 
+                      "COL7" : "IPv6_FLAG", 
+                      "COL8" : "IPv6", 
+                      "COL9" : "PORT6", 
+                      "COL10": "TRP6", 
+                      "COL11": "AUDIT_INTVL", 
+                      "COL12": "AUDIT_TOT", 
+                      "COL13": "LASTUPDATE", 
+                      "COL14": "ADMSTS", 
+                      "COL15": "ADMSTS_STR", 
+                      "COL16": "OPRSTS", 
+                      "COL17": "OPRSTS_STR" 
+         },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>4s} {1:>16s} {2:>4s} {3:>12s} {4:>20s} {5:>8s} {6:>4s} {7:>12s} {8:>20s} {9:>8s} {10:>12s} {11:>12s} {12:>12s} {13:>24s} {14:>6s} {15:>10s} {16:>6s} {17:>10s}\n",
+                          "value"  : "display.field.COL0,
+                                      display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3,
+                                      display.field.COL4,
+                                      display.field.COL5,
+                                      display.field.COL6,
+                                      display.field.COL7,
+                                      display.field.COL8,
+                                      display.field.COL9,
+                                      display.field.COL10,
+                                      display.field.COL11,
+                                      display.field.COL12,
+                                      display.field.COL13,
+                                      display.field.COL14,
+                                      display.field.COL15,
+                                      display.field.COL16,
+                                      display.field.COL17"
+                         },
+            "comment3" : "\t-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>4d} {1:>16s} {2:>4d} {3:>12d} {4:>20s} {5:>8s} {6:>4d} {7:>12d} {8:>20s} {9:>8s} {10:>12d} {11:>12d} {12:>12d} {13:>24s} {14:>6d} {15:>10s} {16:>6d} {17:>10s}\n",
+                    "value"  : "response.body.array.ID, 
+                                response.body.array.NAME, 
+                                response.body.array.TYPE, 
+                                response.body.array.IPv4_FLAG, 
+                                response.body.array.IPv4, 
+                                response.body.array.PORT4, 
+                                response.body.array.TRP4, 
+                                response.body.array.IPv6_FLAG, 
+                                response.body.array.IPv6, 
+                                response.body.array.PORT6, 
+                                response.body.array.TRP6, 
+                                response.body.array.AUDIT_INTVL,
+                                response.body.array.AUDIT_TOT, 
+                                response.body.array.LASTUPDATE, 
+                                response.body.array.ADMSTS, 
+                                response.body.array.ADMSTS_STR, 
+                                response.body.array.OPRSTS, 
+                                response.body.array.OPRSTS_STR" 
+                }
+            },
+            "comment8" : "\t-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

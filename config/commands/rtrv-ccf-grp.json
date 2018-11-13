@@ -1,56 +1,54 @@
 {
-    "name"     : "RTRV-NODE-GRP",
+    "name"     : "RTRV-CCF-GRP",
     "grade"    : 0,
     "request" : {
         "header" : {
             "MsgType" : 1,
-            "CmdID"   : 10104,
+            "CmdID"   : 10004,
             "Key"     : 0
         },
 
         "body"  : {
-            "AREA": {"mandatory":"TRUE",  "type": "int"},
-            "NODE": {"mandatory":"FALSE", "type": "string", "default":"3"}
+            "GRP": {"mandatory":"TRUE",  "type": "int"}
         }
     },
 
     "response" : {
         "header" : {
             "MsgType" : 0,
-            "CmdID"   : 3501,
+            "CmdID"   : 10004,
             "Key"     : 0,
             "result"  : 0
         },
 
         "body"  : {
-            "array"   : [{"AREA"      : {"type":"int",    "default":"-1"},
-                          "GRP_NAME"  : {"type":"string", "default":"NONE"},
-                          "GRP_NO"    : {"type":"int",    "default":"-1"},
-                          "NODE_TYPE" : {"type":"string", "default":"NONE"},
-                          "REDUN_TYPE": {"type":"string", "default":"NONE"}}]
+            "array"   : [{"AREA"      : {"type":"int",    "default": "-1"},
+                          "GRP_NAME"  : {"type":"string", "default": "NONE"},
+                          "GRP_NO"    : {"type":"int",    "default": "-1"},
+                          "NODE_TYPE" : {"type":"string", "default": "NONE"},
+                          "REDUN_TYPE": {"type":"string", "default": "NONE"}}]
          }
     },
 
     "display" : {
-        "help_brief"   : "AREA(I),[NAME]",
+        "help_brief"   : "GRP(I)",
         "help_detail"  : {
             "line1"    : {"format" : "{0}    {1}\n",
                           "value"  : "$NODE_NAME, $TIME"},
             "comment1" : "\t--------------------------------------------\n",
-            "comment2" : "\tUsage      : RTRV-NODE-GRP : AREA=num, [NAME]\n",
-            "comment3" : "\tAREA       : TAS AREA INDEX \n",
+            "comment2" : "\tUsage      : RTRV-CCF-GRP : [node_index]\n",
+            "comment3" : "\tnode_index : TAS NODE INDEX\n",
             "comment4" : "\t--------------------------------------------\n",
             "comment9" : "COMPLETED \n"
         },
 
-
         "success" : {
-            "comment0" : "\n",
-            "line1"    : {"format" : "COMMAND : {0}    \n", "value" : "$COMMAND"},
-            "line2"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
-            "comment1" : "\t-------------------------------------------------\n",
-            "comment2" : "\tAREA   GRP_NAME   GRP_NO    NODE_TYPE  REDUN_TYPE\n",
-            "comment3" : "\t-------------------------------------------------\n",
+            "line1" : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "line2" : {"format" : "{0}    \n", "value" : "$RAW_RESPONSE"},
+            "line3" : {"format" : "{0}    \n", "value" : "$RAW_REQUEST"},
+            "line3" : {"format" : "{0}    \n", "value" : "$COMMAND"},
+            "comment1" : "\tAREA   GRP_NAME   GRP_NO    NODE_TYPE  REDUN_TYPE\n",
+            "comment2" : "\t-------------------------------------------------\n",
             "table1" : {
                 "name"   : "response.body.array",
                 "line1"  : {
@@ -62,14 +60,14 @@
                                 response.body.array.REDUN_TYPE"
                 }
             },
-            "comment8" : "\t-------------------------------------------------\n",
+            "comment3" : "\t-------------------------------------------------\n",
             "comment9" : "COMPLETED \n"
         },
 
         "failure" :  {
             "line"  : {
                 "format" : "{0}",
-                "value"  : "$MESSAGE"
+                "value"  : "$RAW_RESPONSE"
             }
         }
     }

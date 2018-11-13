@@ -1,0 +1,111 @@
+{
+    "name"     : "RTRV-DKU-USE",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10425,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA": {"mandatory":"FALSE", "type": "int"},
+            "NODE": {"mandatory":"TRUE", "type": "string"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10425,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""},
+            "array"   : [
+                {"AREA"  : {"type":"int",    "default":-1},
+                 "NODE"  : {"type":"string", "default":"NONE"},
+                 "array" : [
+                     {"MOUNT"   : {"type":"string", "default":"NONE"},
+                      "TOTAL"   : {"type":"int",    "default":-1},
+                      "USED"    : {"type":"int",    "default":-1},
+                      "FREE"    : {"type":"int",    "default":-1},
+                      "USAGE"   : {"type":"string", "default":"NONE"},
+                      "GRADE"   : {"type":"string", "default":"NONE"},
+                      "OBSERVE" : {"type":"int",    "default":-1}}
+                 ]}
+            ]
+        }
+    },
+
+    "display" : {
+        "help_brief"   : "[AREA(I)],NODE",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-DKU-USE : [AREA=num],NODE=string\n",
+            "comment3" : "\t--------------------------------------------\n",
+            "comment4" : "\tAREA       - AREA INDEX (INTEGER, OPTIONAL)\n",
+            "comment5" : "\tNODE       - NODE NAME  (STRING,  MANDATORY)\n",
+            "comment6" : "\t--------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : {
+            "COL0" : "MOUNT",
+            "COL1" : "TOTAL",
+            "COL2" : "USED",
+            "COL3" : "FREE",
+            "COL4" : "USAGE",
+            "COL5" : "GRADE",
+            "COL6" : "OBSERVE"
+        },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\t{0:>16s} {1:>8s} {2:>8s} {3:>8s} {4:>12s} {5:>12s} {6:>8s}\n",
+                "value"  : "display.field.COL0,
+                            display.field.COL1,
+                            display.field.COL2,
+                            display.field.COL3,
+                            display.field.COL4,
+                            display.field.COL5,
+                            display.field.COL6"
+            },
+            "comment2" : "\t--------------------------------------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array.array",
+                "line1"  : {
+                    "format" : "\t{0:>16s} {1:>8d} {2:>8d} {3:>8d} {4:>12s} {5:>12s} {6:>8d}\n",
+                    "value"  : "response.body.array.array.MOUNT,
+                                response.body.array.array.TOTAL,
+                                response.body.array.array.USED,
+                                response.body.array.array.FREE,
+                                response.body.array.array.USAGE,
+                                response.body.array.array.GRADE,
+                                response.body.array.array.OBSERVE"
+                }
+            },
+            "comment8" : "\t--------------------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

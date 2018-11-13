@@ -1,0 +1,129 @@
+{
+    "name"     : "RTRV-OVLD-LMT",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10411,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA" : {"mandatory":"FALSE", "type": "int"},
+            "NTPYE": {"mandatory":"FALSE", "type": "string", 
+                     "constraints" : {"enum": "EMS,VSEC,VLDC"}},
+            "TYPE" : {"mandatory":"FALSE", "type": "string", 
+                     "constraints" : {"enum": "CPU,MEM"}}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10411,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""},
+            "array"   : [{"AREA"      : {"type":"string", "default":"NONE"},
+                          "NODE_TYPE" : {"type":"string", "default":"NONE"},
+                          "CPU_TYPE"  : {"type":"string", "default":"NONE"},
+                          "CPU_CRI_A" : {"type":"int",    "default":-1},
+                          "CPU_CRI_C" : {"type":"int",    "default":-1},
+                          "CPU_MAJ_A" : {"type":"int",    "default":-1},
+                          "CPU_MAJ_C" : {"type":"int",    "default":-1},
+                          "CPU_MIN_A" : {"type":"int",    "default":-1},
+                          "CPU_MIN_C" : {"type":"int",    "default":-1},
+                          "MEM_TYPE"  : {"type":"string", "default":"NONE"},
+                          "MEM_CRI_A" : {"type":"int",    "default":-1},
+                          "MEM_CRI_C" : {"type":"int",    "default":-1},
+                          "MEM_MAJ_A" : {"type":"int",    "default":-1},
+                          "MEM_MAJ_C" : {"type":"int",    "default":-1},
+                          "MEM_MIN_A" : {"type":"int",    "default":-1},
+                          "MEM_MIN_C" : {"type":"int",    "default":-1}}]
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "[AREA], [NTYPE], [TYPE]",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-OVLD-LMT : [AREA=num],[NTYPE=string],[TYPE=string]\n",
+            "comment3" : "\tAREA       : AREA INDEX    (INTEGER) \n",
+            "comment4" : "\tNTYPE      : EMS|VSEC|VLDC (STRING)  \n",
+            "comment5" : "\tTYPE       : CPU|MEM       (STRING)  \n",
+            "comment6" : "\t---------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL0" : "", 
+                      "COL1" : "", 
+                      "COL2" : "", 
+                      "COL3" : "CRI_A", 
+                      "COL4" : "CRI_C", 
+                      "COL5" : "MAJ_A", 
+                      "COL6" : "MAJ_C", 
+                      "COL7" : "MIN_A", 
+                      "COL8" : "MIN_C" 
+         },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t-----------------------------------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>s} {1:>s} {2:>10s} {3:>10s} {4:>10s} {5:>10s} {6:>10s} {7:>10s} {8:>10s}\n",
+                          "value"  : "display.field.COL0,
+                                      display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3,
+                                      display.field.COL4,
+                                      display.field.COL5,
+                                      display.field.COL6,
+                                      display.field.COL7,
+                                      display.field.COL8"
+                         },
+            "comment3" : "\t------------------------------------------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>10s} {1:>10s} \n\t{2:>10s} {3:>10d} {4:>10d} {5:>10d} {6:>10d} {7:>10d} {8:>10d} \n\t{9:>10s} {10:>10d} {11:>10d} {12:>10d} {13:>10d} {14:>10d} {15:>10d}\n",
+                    "value"  : "response.body.array.AREA,
+                                response.body.array.NODE_TYPE,
+                                response.body.array.CPU_TYPE,
+                                response.body.array.CPU_CRI_A,
+                                response.body.array.CPU_CRI_C,
+                                response.body.array.CPU_MAJ_A,
+                                response.body.array.CPU_MAJ_C,
+                                response.body.array.CPU_MIN_A,
+                                response.body.array.CPU_MIN_C,
+                                response.body.array.MEM_TYPE,
+                                response.body.array.MEM_CRI_A,
+                                response.body.array.MEM_CRI_C,
+                                response.body.array.MEM_MAJ_A,
+                                response.body.array.MEM_MAJ_C,
+                                response.body.array.MEM_MIN_A,
+                                response.body.array.MEM_MIN_C"
+                }
+            },
+            "comment8" : "\t-------------------------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

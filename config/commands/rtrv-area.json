@@ -1,0 +1,83 @@
+{
+    "name"     : "RTRV-AREA",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10121,
+            "Key"     : 0
+        },
+
+        "body"  : {
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10121,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"  : {"type":"string", "default":""},
+            "array" : [
+                {"ID"    : {"type":"int",    "default": -1},
+                 "NAME"  : {"type":"string", "default": "NONE"}}
+            ],
+            "ID"    : {"type":"int",    "default": -1},
+            "NAME"  : {"type":"string", "default": "NONE"}
+       }
+    },
+
+    "display" : {
+        "help_brief"   : "NONE",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-AREA: x     \n",
+            "comment6" : "\t--------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : {
+            "COL0" : "ID",
+            "COL1" : "NAME"
+        },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t-------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\t{0:>8s} {1:>16} \n",
+                "value"  : "display.field.COL0,
+                            display.field.COL1"
+            },
+            "comment2" : "\t-------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>8d} {1:>16s}\n",
+                    "value"  : "response.body.array.ID,
+                                response.body.array.NAME" }
+            },
+            "comment8" : "\t-------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

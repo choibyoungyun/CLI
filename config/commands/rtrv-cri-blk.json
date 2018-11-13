@@ -1,0 +1,95 @@
+{
+    "name"     : "RTRV-CRI-BLK",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10288,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA" : {"mandatory":"FALSE", "type": "int"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10288,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""},
+            "RESULT"  : "OK",
+            "REASON"  : "-",
+            "array"   : [{"AREAID"   : {"type":"int",    "default":"-1"},
+                          "GROUP"    : {"type":"string", "default":"NONE"},
+                          "NODE"     : {"type":"string", "default":"NONE"},
+                          "BLOCK"    : {"type":"string", "default":"NONE"},
+                          "PRIORITY" : {"type":"int",    "default":"-1"}}]
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "[AREA(I)]",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-CRI-BLK : [AREA=num]\n",
+            "comment3" : "\tAREA       : AREA INDEX \n",
+            "comment6" : "\t---------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL0": "AREAID",
+                      "COL1": "GROUP",
+                      "COL2": "NODE",
+                      "COL3": "BLOCK",
+                      "COL4": "PRIORITY"
+         },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>6s} {1:>5s} {2:>4s} {3:>5s} {4:>5s}\n",
+                          "value"  : "display.field.COL0,
+                                      display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3,
+                                      display.field.COL4"
+                         },
+            "comment3" : "\t--------------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>6d} {1:>5s} {2:>4s} {3:>5s} {4:>5d}\n",
+                    "value"  : "response.body.array.AREAID,
+                                response.body.array.GROUP,
+                                response.body.array.NODE,
+                                response.body.array.BLOCK,
+                                response.body.array.PRIORITY"
+                }
+            },
+            "comment8" : "\t--------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

@@ -19,7 +19,7 @@
     },
     "display"  :
     {
-        "help_brief"   : "HELP         : [COMMAND=command_name]",
+        "help_brief"   : "[COMMAND=command_name]",
         "help_detail"  :
         {
             "line1"    : {"format" : "{0}    {1}\n",
@@ -46,7 +46,7 @@
             "table1" : {
                 "name"   : "response.body.BRIEF",
                 "line2"  : {
-                    "format" : "\t {0:>16s}                {1:s} \n",
+                    "format" : "\t {0:<16s}                {1:s} \n",
                     "value"  : "response.body.BRIEF.NAME,
                                 response.body.BRIEF.DESC"
                 }

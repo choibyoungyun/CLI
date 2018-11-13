@@ -1,0 +1,104 @@
+{
+    "name"     : "RTRV-SYS-TMR",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10259,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "TYPE": {"mandatory":"FALSE", "type": "string", 
+                     "constraints" : {"enum": "SIP,CALL,SCTP,IM"}}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10259,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":"NONE"},
+            "RESULT"  : "OK",
+            "TYPE"    : "SIP",
+            "array"   : [{"NAME"    : {"type":"string", "default":"NONE"},
+                          "VALUE"   : {"type":"int",    "default":-1},
+                          "MIN"     : {"type":"int",    "default":-1},
+                          "MAX"     : {"type":"int",    "default":-1},
+                          "DEFAULT" : {"type":"int",    "default":-1},
+                          "UNIT"    : {"type":"string", "default":"NONE"},
+                          "MEMO"    : {"type":"string", "default":"NONE"}}]
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "[TYPE]",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-SYS-TMR : [TYPE=string]\n",
+            "comment3" : "\tTYPE       : SIP|CALL|SCTP|IM \n",
+            "comment6" : "\t---------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL0": "NAME",
+                      "COL1": "VALUE",
+                      "COL2": "MIN",
+                      "COL3": "MAX",
+                      "COL4": "DEFAULT",
+                      "COL5": "UNIT",
+                      "COL6": "MEMO"
+         },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t-----------------------------------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>12s} {1:>8s} {2:>8s} {3:>8s} {4:>8s} {5:>8s}  {6:<24s}\n",
+                          "value"  : "display.field.COL0,
+                                      display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3,
+                                      display.field.COL4,
+                                      display.field.COL5,
+                                      display.field.COL6"
+                         },
+            "comment3" : "\t------------------------------------------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>12s} {1:>8d} {2:>8d} {3:>8d} {4:>8d} {5:>8s}  {6:>s}\n",
+                    "value"  : "response.body.array.NAME,
+                                response.body.array.VALUE,
+                                response.body.array.MIN,
+                                response.body.array.MAX,
+                                response.body.array.DEFAULT,
+                                response.body.array.UNIT,
+                                response.body.array.MEMO"
+                }
+            },
+            "comment8" : "\t-------------------------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

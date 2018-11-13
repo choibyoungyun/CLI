@@ -1,0 +1,61 @@
+{
+    "name" : "1100",
+    "request" : {
+        "header" : {
+            "MsgName" : "1100",
+            "MsgType" : 0,
+            "CmdID"   : 1100,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "array": [{"NODE":"UNKNOWN"}]
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgName" : "1100",
+            "MsgType" : 0,
+            "CmdID"   : 1100,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "LOC"  : "loc", 
+            "INF"  : "inf",
+            "EXT3" : {"default":"OFF"}
+        }
+    },
+
+    "display" : {
+        "help"   : {
+            "comment1" : "\t SERVER REPORT\n"
+        },
+        "field"   : { "COL1": "LOC", 
+                      "COL2": "INF", 
+                      "COL3": "EXT3"},
+        "success" : {
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t-------------------------------------\n",
+            "line2"    : {"format" : "\t{0:>8s} {1:>8s} {2:>8s}\n",
+                          "value"  : "display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3"},
+            "comment2" : "\t-------------------------------------\n",
+            "line3"    : {"format" : "\t{0:>8s} {1:>8s} {2:>8s}\n",
+                          "value"  : "response.body.LOC, response.body.INF, response.body.EXT3"
+            },
+            "comment3" : "\t-------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "line"  : {
+                "format" : "{0}",
+                "value"  : "$MESSAGE"
+            }
+        }
+    }
+}

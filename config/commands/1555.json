@@ -1,9 +1,9 @@
 {
-    "name" : "1556",
+    "name" : "1555",
     "request" : {
         "header" : {
             "MsgType" : 1,
-            "CmdID"   : 1556,
+            "CmdID"   : 1555,
             "Key"     : 0
         },
 
@@ -15,7 +15,7 @@
     "response" : {
         "header" : {
             "MsgType" : 0,
-            "CmdID"   : 1556,
+            "CmdID"   : 1555,
             "Key"     : 0,
             "result"  : 0
         },
@@ -43,7 +43,7 @@
                       "COL6": "MEM_LOAD"},
         "success" : {
             "line1"    : {"format" : "{0}    {1}  [{2}]\n", "value" : "$NODE_NAME, $TIME, response.header.CmdID"},
-            "comment1" : "\t---------------------------------------------------------------\n",
+            "comment1" : "\t----------------------------------------------------------\n",
             "line2"    : {"format" : "\t{0:>14s} {1:>8s} {2:>8s} {3:>8s} {4:>8s} {5:>12s}\n",
                           "value"  : "display.field.COL1,
                                       display.field.COL2,
@@ -52,7 +52,7 @@
                                       display.field.COL5,
                                       display.field.COL6"
                          },
-            "comment2" : "\t---------------------------------------------------------------\n",
+            "comment2" : "\t----------------------------------------------------------\n",
             "table1"   : {
                           "name"   : "response.body.array",
                           "line1"  : {
@@ -65,14 +65,14 @@
                                          response.body.array.MEM_LOAD"
                          }
             },
-            "comment3" : "\t---------------------------------------------------------------\n",
+            "comment3" : "\t----------------------------------------------------------\n",
             "comment9" : "COMPLETED \n"
         },
 
         "failure" :  {
             "line"  : {
                 "format" : "{0}",
-                "value"  : "$MESSAGE"
+                "value"  : "$RAW_MESSAGE"
             }
         }
     }

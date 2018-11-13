@@ -1,0 +1,96 @@
+{
+    "name"     : "CRTE-IP-ROUTE",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10270,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA"   : {"mandatory":"TRUE",  "type": "int"},
+            "NODE"   : {"mandatory":"TRUE",  "type": "string"},
+            "NETWORK": {"mandatory":"TRUE",  "type": "string"},
+            "GWIP"   : {"mandatory":"TRUE",  "type": "string"},
+            "DEV"    : {"mandatory":"TRUE",  "type": "string"},
+            "DESC"   : {"mandatory":"FALSE", "type": "string"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10270,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type"    : "string",  "default" : ""},
+            "RESULT"  : {"type"    : "string",  "default" : ""},
+            "AREAID"  : {"type"    : "int",     "default" : -1},
+            "NODE"    : {"type"    : "string",  "default" : ""},
+            "NETWORK" : {"type"    : "string",  "default" : ""},
+            "GWIP"    : {"type"    : "string",  "default" : ""},
+            "DEV"     : {"type"    : "string",  "default" : ""},
+            "DESC"    : {"type"    : "string",  "default" : ""}
+         }
+    },
+
+    "display" : {
+        "help_brief"     : "AREA(I),NODE,NETWORK,GWIP,DEV,[DESC]",
+        "help_detail"    : {
+            "line1"      : {"format" : "{0}    {1}\n",
+                            "value"  : "$NODE_NAME, $TIME"},
+            "comment1"   : "\t------------------------------------------------------\n",
+            "comment2"   : "\tUsage      : CRTE-IP-ROUTE : AREA=num, NODE=string, NETWORK=string, GWIP=string, DEV=string, [DESC=string]\n",
+            "comment3"   : "\t------------------------------------------------------\n",
+            "comment4"   : "\tAREA       : area index (INT,    MANDATORY)           \n",
+            "comment5"   : "\tNODE       : node name  (STRING, MANDATORY)           \n",
+            "comment6"   : "\tNETWORK    : node name  (STRING, MANDATORY)           \n",
+            "comment7"   : "\tGWIP       : node name  (STRING, MANDATORY)           \n",
+            "comment8"   : "\tDEV        : node name  (STRING, MANDATORY)           \n",
+            "comment9"   : "\tDESC       : node name  (STRING, OPTIONAL)            \n",
+            "comment99"  : "\t------------------------------------------------------\n",
+            "comment100" : "COMPLETED \n"
+        },
+
+        "field"   : {
+            "COL0" : "AREAID",
+            "COL1" : "NODE",
+            "COL2" : "NETWORK",
+            "COL3" : "GWIP",
+            "COL4" : "DEV",
+            "COL5" : "DESC"
+        },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------------------\n",
+            "line2"    : {"format" : "\tRESULT  : {0:>s}\n", "value"  : "response.body.RESULT"},
+            "line3"    : {"format" : "\tAREAID  : {0:>d}\n", "value"  : "response.body.AREAID"},
+            "line4"    : {"format" : "\tNODE    : {0:>s}\n", "value"  : "response.body.NODE"},
+            "line5"    : {"format" : "\tNETWORK : {0:>s}\n", "value"  : "response.body.NETWORK"},
+            "line6"    : {"format" : "\tGWIP    : {0:>s}\n", "value"  : "response.body.GWIP"},
+            "line7"    : {"format" : "\tDEV     : {0:>s}\n", "value"  : "response.body.DEV"},
+            "line8"    : {"format" : "\tDESC    : {0:>s}\n", "value"  : "response.body.DESC"},
+            "comment8" : "\t----------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR"
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+
+}

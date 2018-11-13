@@ -1,0 +1,133 @@
+{
+    "name"     : "RTRV-PORT-INF",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10112,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA": {"mandatory":"TRUE", "type": "int"},
+            "NODE": {"mandatory":"TRUE", "type": "string"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10112,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""},
+            "array"   : [{"AREA"       : {"type":"int",    "default":-1},
+                          "NODE"       : {"type":"string", "default":"NONE"},
+                          "PORT"       : {"type":"int",    "default":-1},
+                          "TYPE"       : {"type":"int",    "default":-1},
+                          "TYPE_STR"   : {"type":"string", "default":"NONE"},
+                          "REDUN"      : {"type":"string", "default":"NONE"},
+                          "IFNAME"     : {"type":"string", "default":"NONE"},
+                          "IP"         : {"type":"string", "default":"NONE"},
+                          "MTU"        : {"type":"int",    "default":-1},
+                          "DESC"       : {"type":"string", "default":"NONE"},
+                          "NODEG"      : {"type":"string", "default":"NONE"},
+                          "VIP"        : {"type":"string", "default":"NONE"},
+                          "VIP_IFNAME" : {"type":"int",    "default":-1},
+                          "VIP_SWF"    : {"type":"int",    "default":-1}}],
+            "TOTAL"    : {"type":"int", "default":0}
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "AREA(I),NODE",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-PORT-INF : AREA=num,NODE=string\n",
+            "comment3" : "\tAREA       : AREA INDEX (INTEGER)\n",
+            "comment4" : "\tNODE       : NODE NAME  (STRING)\n",
+            "comment8" : "\t--------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : {
+            "COL0" : "AREA",
+            "COL1" : "NODE",
+            "COL2" : "PORT",
+            "COL3" : "TYPE",
+            "COL4" : "TYPE_STR",
+            "COL5" : "REDUN",
+            "COL6" : "IFNAME",
+            "COL7" : "IP",
+            "COL8" : "MTU",
+            "COL9" : "DESC",
+            "COL10": "NODEG",
+            "COL11": "VIP",
+            "COL12": "VIP_IFNAME",
+            "COL13": "VIP_SWF"
+        },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t-------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\t{0:>4s} {1:>8s} {2:>4s} {3:>4s} {4:>8s} {5:>8s} {6:>8s} {7:>24s} {8:>8s} {9:>24s} {10:>8s} {11:>24s} {12:>10s} {13:>8s}\n",
+                "value"  : "display.field.COL0,
+                            display.field.COL1,
+                            display.field.COL2,
+                            display.field.COL3,
+                            display.field.COL4,
+                            display.field.COL5,
+                            display.field.COL6,
+                            display.field.COL7,
+                            display.field.COL8,
+                            display.field.COL9,
+                            display.field.COL10,
+                            display.field.COL11,
+                            display.field.COL12,
+                            display.field.COL13"
+            },
+            "comment2" : "\t-------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>4d} {1:>8s} {2:>4d} {3:>4d} {4:>8s} {5:>8s} {6:>8s} {7:>24s} {8:>8d} {9:>24s} {10:>8s} {11:>24s} {12:>10d} {13:>8d}\n",
+                    "value"  : "response.body.array.AREA,
+                                response.body.array.NODE,
+                                response.body.array.PORT,
+                                response.body.array.TYPE,
+                                response.body.array.TYPE_STR,
+                                response.body.array.REDUN,
+                                response.body.array.IFNAME,
+                                response.body.array.IP,
+                                response.body.array.MTU,
+                                response.body.array.DESC,
+                                response.body.array.NODEG,
+                                response.body.array.VIP,
+                                response.body.array.VIP_IFNAME,
+                                response.body.array.VIP_SWF"
+                }
+            },
+            "comment8" : "\t-------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

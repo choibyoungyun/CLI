@@ -1,0 +1,74 @@
+{
+    "name"     : "DLE-AREA",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10120,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "ID": {"mandatory":"TRUE",  "type": "int"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10120,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"   : {"type":"string", "default":""},
+            "RESULT" : {"type":"string", "default":"NONE"},
+            "REASON" : {"type":"string", "default":"NONE"},
+            "ID"     : {"type":"int",    "default":-1},
+            "NAME"   : {"type":"string", "default":"NONE"}
+       }
+    },
+
+    "display" : {
+        "help_brief"   : "ID(I)",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t----------------------------------------------\n",
+            "comment2" : "\tUsage      : DLT-AREA: ID=num                 \n",
+            "comment3" : "\t----------------------------------------------\n",
+            "comment4" : "\tID         - area identifier (INT, MANDATORY) \n",
+            "comment8" : "\t----------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t-------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tRESULT  : {0:s}\n", "value"  : "response.body.RESULT"
+            },
+            "line3"    : {
+                "format" : "\tDELETE  : ID ({0:<d}), NAME({1:s})\n",
+                           "value"  : "response.body.ID, response.body.NAME"
+            },
+            "comment8" : "\t-------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR"
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

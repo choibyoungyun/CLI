@@ -1,0 +1,105 @@
+{
+    "name"     : "RTRV-SIP-TRP",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10278,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA" : {"mandatory":"FALSE", "type": "int"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10278,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":"NONE"},
+            "array"   : [{"AREA"    : {"type":"int",    "default":"-1"},
+                          "ID"      : {"type":"int",    "default":"-1"},
+                          "NAME"    : {"type":"string", "default":"NONE"},
+                          "VER"     : {"type":"string", "default":"NONE"},
+                          "VER_NUM" : {"type":"int",    "default":"-1"},
+                          "IP"      : {"type":"string", "default":"NONE"},
+                          "PORT"    : {"type":"string", "default":"NONE"},
+                          "USE"     : {"type":"string", "default":"NONE"}}]
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "[AREA(I)]",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-SIP-TRP : [AREA=num]\n",
+            "comment3" : "\tAREA       : AREA INDEX \n",
+            "comment6" : "\t---------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL1": "AREA", 
+                      "COL2": "ID", 
+                      "COL3": "NAME", 
+                      "COL4": "VER", 
+                      "COL5": "VER_NUM", 
+                      "COL6": "IP", 
+                      "COL7": "PORT", 
+                      "COL8": "USE" 
+         },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t-----------------------------------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>4s} {1:>2s} {2:>12s} {3:>8s} {4:>8s} {5:>24s} {6:>8s} {7:>2s} \n",
+                          "value"  : "display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3,
+                                      display.field.COL4,
+                                      display.field.COL5,
+                                      display.field.COL6,
+                                      display.field.COL7,
+                                      display.field.COL8"
+                         },
+            "comment3" : "\t------------------------------------------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>4d} {1:>2d} {2:>12s} {3:>8s} {4:>8d} {5:>24s} {6:>8s} {7:>2s} \n",
+                    "value"  : "response.body.array.AREA,
+                                response.body.array.ID,
+                                response.body.array.NAME,
+                                response.body.array.VER,
+                                response.body.array.VER_NUM,
+                                response.body.array.IP,
+                                response.body.array.PORT,
+                                response.body.array.USE"
+                }
+            },
+            "comment8" : "\t-------------------------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

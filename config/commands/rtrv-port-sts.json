@@ -1,0 +1,120 @@
+{
+    "name"     : "RTRV-PORT-STS",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10201,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA": {"mandatory":"TRUE", "type": "int"},
+            "NODE": {"mandatory":"TRUE", "type": "string"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10201,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""},
+            "array"   : [{"AREA"  : {"type":"int",    "default":-1},
+                          "NODE"  : {"type":"string", "default":"NONE"},
+                          "array" : [{"PORT"     : {"type":"int",    "default":-1},
+                                      "TYPE"     : {"type":"int",    "default":-1},
+                                      "TYPE_STR" : {"type":"string", "default":"NONE"},
+                                      "ACTSTS"   : {"type":"string", "default":"NONE"},
+                                      "ADMSTS"   : {"type":"string", "default":"NONE"},
+                                      "OPRSTS"   : {"type":"string", "default":"NONE"},
+                                      "MATE"     : {"type":"string", "default":"NONE"},
+                                      "DESC"     : {"type":"string", "default":"NONE"},
+                                      "DEFAULT"  : {"type":"string", "default":"NONE"}}]}],
+            "TOTAL"   : {"type":"int",    "default":0},
+            "ENABLE"  : {"type":"int",    "default":0},
+            "DISABLE" : {"type":"int",    "default":0},
+            "UNLOCK"  : {"type":"int",    "default":0},
+            "LOCK"    : {"type":"int",    "default":0}
+        }
+    },
+
+    "display" : {
+        "help_brief"   : "AREA(I),NODE",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-PORT-STS : AREA=num,NODE=string\n",
+            "comment3" : "\tAREA       : AREA INDEX (INTEGER)\n",
+            "comment4" : "\tNODE       : NODE NAME  (STRING)\n",
+            "comment8" : "\t--------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : {
+            "COL0" : "PORT",
+            "COL1" : "TYPE",
+            "COL2" : "TYPE_STR",
+            "COL3" : "ACTSTS",
+            "COL4" : "ADMSTS",
+            "COL5" : "OPRSTS",
+            "COL6" : "MATE",
+            "COL7" : "DESC",
+            "COL8" : "DETAIL"
+        },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\t{0:>8s} {1:>4s} {2:>8s} {3:>8s} {4:>8s} {5:>8s} {6:>12s} {7:12s} {8:s}\n",
+                "value"  : "display.field.COL0,
+                            display.field.COL1,
+                            display.field.COL2,
+                            display.field.COL3,
+                            display.field.COL4,
+                            display.field.COL5,
+                            display.field.COL6,
+                            display.field.COL7,
+                            display.field.COL8"
+            },
+            "comment2" : "\t--------------------------------------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array.array",
+                "line1"  : {
+                    "format" : "\t{0:>8d} {1:>4d} {2:>8s} {3:>8s} {4:>8s} {5:>8s} {6:>12s} {7:12s} {8:s}\n",
+                    "value"  : "response.body.array.array.PORT,
+                                response.body.array.array.TYPE,
+                                response.body.array.array.TYPE_STR,
+                                response.body.array.array.ACTSTS,
+                                response.body.array.array.ADMSTS,
+                                response.body.array.array.OPRSTS,
+                                response.body.array.array.MATE,
+                                response.body.array.array.DESC,
+                                response.body.array.array.DETAIL"
+                }
+            },
+
+            "comment8" : "\t--------------------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR"
+            },
+            "comment2" : "\t--------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

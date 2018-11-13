@@ -1,0 +1,99 @@
+{
+    "name"     : "RTRV-SESS-CNT",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10261,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA"  : {"mandatory":"FALSE", "type": "int"},
+            "NODE"  : {"mandatory":"FALSE", "type": "string", "default":"1"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10261,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : "ERROR",
+            "NODE_NO" : 286,
+            "array"   : [{"NODE"       : "VSEC0",
+                          "ORG_MMTEL"  : 0,
+                          "TRM_MMTEL"  : 0,
+                          "ORG_TRANS"  : 0,
+                          "TRM_TRANS"  : 0,
+                          "UNDEF"      : 0,
+                          "TOTAL"      : 0}]
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "[AREA(I)],[NAME]",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-SESS-CNT : [AREA=value1], [NODE=value2]\n",
+            "comment3" : "\tAREA       : NUMBER OF AREA\n",
+            "comment3" : "\tNODE       : NODE NAME\n",
+            "comment4" : "\t--------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+
+        "field"   : { "COL0":"NODE",
+                      "COL1":"ORG_MMTEL",
+                      "COL2":"TRM_MMTEL",
+                      "COL3":"ORG_TRANS",
+                      "COL4":"TRM_TRANS",
+                      "COL5":"UNDEF",
+                      "COL6":"TOTAL"},
+        "success" : {
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {"format" : "\tNODE_NO: {0}\n", "value" : "response.body.NODE_NO"},
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "line3"    : {
+                          "format" : "\t{0:>8s} {1:>10s} {2:>10s} {3:>10s} {4:>10s} {5:>8s} {6:>8s}\n",
+                          "value"  : "display.field.COL0,
+                                      display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3,
+                                      display.field.COL4,
+                                      display.field.COL5,
+                                      display.field.COL6"
+             },
+            "comment3" : "\t--------------------------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>8s} {1:>10d} {2:>10d} {3:>10d} {4:>10d} {5:>8d} {6:>8d}\n",
+                    "value"  : "response.body.array.NODE,
+                                response.body.array.ORG_MMTEL,
+                                response.body.array.TRM_MMTEL,
+                                response.body.array.ORG_TRANS,
+                                response.body.array.TRM_TRANS,
+                                response.body.array.UNDEF,
+                                response.body.array.TOTAL"
+                }
+            },
+            "comment4" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "line"  : {
+                "format" : "{0}",
+                "value"  : "response.body.INFO"
+            }
+        }
+    }
+}

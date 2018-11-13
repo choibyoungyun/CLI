@@ -1,0 +1,81 @@
+{
+    "name"     : "RTRV-DKU-LMT",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10426,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA": {"mandatory":"FALSE", "type": "int"},
+            "TYPE": {"mandatory":"TRUE",  "type": "string",
+                     "constraints" : {"enum":"EMS,VSE,VLDC"}}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10426,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"   : {"type":"string", "default":""},
+            "TYPE"   : {"type":"string", "default":"NONE"},
+            "CRI_A"  : {"type":"int",    "default":-1},
+            "CRI_C"  : {"type":"int",    "default":-1},
+            "MAJ_A"  : {"type":"int",    "default":-1},
+            "MAJ_C"  : {"type":"int",    "default":-1},
+            "MIN_A"  : {"type":"int",    "default":-1},
+            "MIN_C"  : {"type":"int",    "default":-1}
+        }
+    },
+
+    "display" : {
+        "help_brief"   : "[AREA(I)],NODE",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-DKU-LMT : [AREA=num],TYPE=string\n",
+            "comment3" : "\t--------------------------------------------\n",
+            "comment4" : "\tAREA       - AREA INDEX (INTEGER, OPTIONAL) \n",
+            "comment5" : "\tTYPE       - TYPE NAME  (ENUM,    MANDATORY)\n",
+            "comment6" : "\t             [ENUM VALUE : EMS, VSE, VLDC]  \n",
+            "comment8" : "\t--------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t------------------------------------------------------------\n",
+            "line2"    : {"format" : "\t TYPE   : {0:<s}\n", "value"  : "response.body.TYPE"},
+            "line3"    : {"format" : "\t CRI_A  : {0:<d}\n", "value"  : "response.body.CRI_A"},
+            "line4"    : {"format" : "\t CRI_C  : {0:<d}\n", "value"  : "response.body.CRI_C"},
+            "line5"    : {"format" : "\t MAJ_A  : {0:<d}\n", "value"  : "response.body.MAJ_A"},
+            "line6"    : {"format" : "\t MAJ_C  : {0:<d}\n", "value"  : "response.body.MAJ_C"},
+            "line7"    : {"format" : "\t MIN_A  : {0:<d}\n", "value"  : "response.body.MIN_A"},
+            "line8"    : {"format" : "\t MIN_C  : {0:<d}\n", "value"  : "response.body.MIN_C"},
+            "comment8" : "\t------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

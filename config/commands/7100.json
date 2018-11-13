@@ -47,7 +47,7 @@
                           "value"  : "response.body.LOC,
                                       response.body.SUBID,
                                       response.body.INF"},
-            "comment3" : "\t--------------------\n",
+            "comment3" : "\t-------------------------------------------------\n",
             "comment9" : "COMPLETED \n"
         },
 

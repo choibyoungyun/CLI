@@ -1,0 +1,66 @@
+{
+    "name"     : "RTRV-CDRP-RATE",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10248,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA"  : {"madatory":"FALSE", "type": "int"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10248,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+             "AREA" : {"type" : "int", "default" : "0"},
+             "NOR"  : {"type" : "int", "default" : "0"},
+             "MIN"  : {"type" : "int", "default" : "0"},
+             "MAJ"  : {"type" : "int", "default" : "0"},
+             "CRI"  : {"type" : "int", "default" : "0"}
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "[AREA(I)]",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-CDRP-RATE : [AREA=num]    \n",
+            "comment3" : "\tarea       : TAS APPLICATION AREA (INTEGER) \n",
+            "comment5" : "\texample    : RTRV-DEF-NODE:area=0           \n",
+            "comment6" : "\t--------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+
+        "success" : {
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {"format" : "\t AREA_ID   : {0:<d}\n", "value" : "response.body.AREA"},
+            "line3"    : {"format" : "\t NORMAL    : {0:<d}\n", "value" : "response.body.NOR"},
+            "line4"    : {"format" : "\t MINOR     : {0:<d}\n", "value" : "response.body.MIN"},
+            "line5"    : {"format" : "\t MAJOR     : {0:<d}\n", "value" : "response.body.MAJ"},
+            "line6"    : {"format" : "\t CRITICAL  : {0:<d}\n", "value" : "response.body.CRI"},
+            "comment3" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "line"  : {
+                "format" : "{0}",
+                "value"  : "response.body.INFO"
+            }
+        }
+    }
+}
