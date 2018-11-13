@@ -83,7 +83,7 @@ class EMSProtocol ():
             out_bytes = msg.encode()
             self.__ostream.write (out_bytes)
             await self.__ostream.drain()
-            trace.debug ("succ, {0} send request to EMS CMD [{1}]"\
+            trace.info ("succ, {0} send request to EMS CMD [{1}]"\
                          .format(self.get_addr(), out_bytes))
             return True, None
         except Exception as ex:
@@ -238,9 +238,22 @@ class EMSClient ():
         msg        = None
         fname      = None
         client     = None
+
+        if len(self.__clients) == 0:
+            trace.debug ("info, not found login terminal for notification")
+            return
+
+        try:
+            msg = json.loads(in_string)
+        except Exception as ex:
+            trace.error ("fail, {0} json loads [name:{0}, args:{1}"\
+               .format(self.get_addr(), type(ex).__name__, ex.args))
+            trace.error ("fail, {0} discard received msg from EMS"\
+               .format(self.get_addr()))
+            return
+
         try:
             for client in self.__clients:
-                msg = json.loads(in_string)
                 fname = client.get_path() \
                         + str(msg['header']['CmdID']) + ".json"
                 trace.debug ("info, notify pod fname [{0}]".format(fname))
@@ -262,8 +275,9 @@ class EMSClient ():
 
                 await client.response (self.__pod)
         except Exception as ex:
-            trace.error ("fail, {0} notify exception [name:{0}, args:{1}"\
+            trace.error ("fail, {0} json loads [name:{0}, args:{1}"\
                .format(self.get_addr(), type(ex).__name__, ex.args))
+
 
     async def __handle_notify  (self):
         trace.critical ("info, {0} startup {1} handle"\

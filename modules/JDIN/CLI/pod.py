@@ -301,10 +301,6 @@ class CommandDictionary ():
     # -------------------------------------------------------------------
     #  RESPONSE API
     # -------------------------------------------------------------------
-    def get_pod_response (self):
-        return self.__root[POD_KEYWORD_RESPONSE]
-    def set_pod_response(self, response):
-        self.__root[POD_KEYWORD_RESPONSE] = response
     def set_pod_response_key (self, key):
         self.__root[POD_KEYWORD_RESPONSE][POD_KEYWORD_HEADER]['Key'] = key
     def set_pod_response_result (self, result):
@@ -321,6 +317,21 @@ class CommandDictionary ():
             return self.__root[POD_KEYWORD_RESPONSE][POD_KEYWORD_HEADER]['result']
         except :
             return self.__root[POD_KEYWORD_RESPONSE][POD_KEYWORD_HEADER]['Result']
+
+    def get_pod_response (self):
+        return self.__root[POD_KEYWORD_RESPONSE]
+
+    def set_pod_response(self, response):
+        if 'Result' in response[POD_KEYWORD_HEADER].keys():
+            self.set_pod_response_result (response[POD_KEYWORD_HEADER]['Result'])
+        elif 'result' in response['header'].keys():
+            self.set_pod_response_result (response[POD_KEYWORD_HEADER]['result'])
+        else:
+            self.__error_string += "fail, not found response result field"
+            trace.error (self.__error_string)
+            return False
+        return self.set_pod_notify (response)
+
     def get_pod_response_raw (self):
         return self.__root['raw_response']
     def set_pod_response_raw (self, message):
@@ -375,10 +386,10 @@ class CommandDictionary ():
                 item = dict()
                 for key in dictionary.keys():
                     value = None
-                    if key is row.keys():
+                    if key in row.keys():
                         value = row[key]
-                    item[key] = self.__set_pod_notify_value (dictionary[key],
-                                                             value)
+                    item[key] = self.__set_pod_notify_value(\
+                                                dictionary[key], value)
                     if item[key] is None:
                         return None
                 dest.append(item)
@@ -444,7 +455,7 @@ class CommandDictionary ():
         elif keyword == "$COMMAND":
             return self.get_pod_command()
         elif keyword == "$ERROR":
-            return self.__error_string()
+            return self.__error_string
         else:
             return "NULL"
 
@@ -465,22 +476,27 @@ class CommandDictionary ():
             del key_list[0]
             return self.__get_key_value (value, key_list, row_num)
         elif type(value) is list:
-            value = value[row_num]
+            if len(key_list) == 2:
+                value = value[row_num]
+            else:
+                value = value[0]
             del key_list[0]
             return self.__get_key_value (value, key_list, row_num)
         else :
             return value
 
 
-    def __get_line_values (self, root_values, output_format, output_value, row_num = 0):
+    def __get_line_values (self, root_values, \
+                           output_format, output_value, row_num = 0):
         value_list= list()
         for value in output_value.split(POD_VALUE_SEPARATOR):
             value = value.strip()
             if value[0] == '$':
                 value_list.append (self.__get_reserved_value (value))
             else :
-                value_list.append (self.__get_key_value (root_values,value.split('.'), row_num))
-
+                value_list.append (self.__get_key_value (root_values,      \
+                                                         value.split('.'), \
+                                                         row_num))
         return output_format.format(*value_list)
 
 
@@ -497,7 +513,7 @@ class CommandDictionary ():
         o_format = out_format[key[0]][POD_KEYWORD_FORMAT]
         o_value  = out_format[key[0]][POD_KEYWORD_VALUE]
 
-        # get table row comment value 
+        # get table row comment value
         key = None
         key = [s for s in list(out_format.keys()) \
                 if s.startswith(POD_KEYWORD_COMMENT) is True]
@@ -505,14 +521,26 @@ class CommandDictionary ():
             line_delimiter = out_format[key[0]]
 
         # get value's object from table name
-        # ex) body.table_name -> root_value['body']['table_name]
+        # ex) body.table_name -> root_value['body']['table_name']
+        # NOT USED
         table_values = root_values
-        for key in out_format[POD_KEYWORD_NAME].strip().split('.'):
-            table_values = table_values[key];
+        table_name = out_format[POD_KEYWORD_NAME].strip().split('.')
+        for key in table_name[0:-1]:
+            if type (table_values[key]) is list:
+                table_values = table_values[key][0]
+            else :
+                table_values = table_values[key]
+        table_values = table_values[table_name[-1]]
+
+        if table_values is None:
+            return ""
+        # ------------------------------------------------------
 
         row_num = 0
         for line in table_values:
-            result_string += self.__get_line_values (root_values, o_format, o_value, row_num)
+            result_string += self.__get_line_values (root_values,       \
+                                                     o_format, o_value, \
+                                                     row_num)
             if line_delimiter:
                 result_string += line_delimiter
             row_num += 1
@@ -548,7 +576,7 @@ class CommandDictionary ():
                     self.__get_line_values ( \
                             pod_object,              \
                             now_template[key][POD_KEYWORD_FORMAT],\
-                            now_template[key][POD_KEYWORD_VALUE],0)
+                            now_template[key][POD_KEYWORD_VALUE])
                 elif key.startswith (POD_KEYWORD_TABLE):
                     #'TABLE' KEYWORD PROCESSING
                     pod_string += \

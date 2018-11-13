@@ -90,12 +90,18 @@ class OPTerminal ():
         while self.is_exit is False:
             command = None
             command = await aioconsole.ainput ('CMD>>')
-            if not command:
+            if not command or len(command) == 0:
                 continue
-            if command.split()[0] == "exit" or command.split()[0] == "quit" :
+            
+            if len(command.split()) < 1:
+                continue
+            else:
+               name = command.split()[0]
+            
+            if name == "exit" or name == "quit" :
                 os._exit(1)
 
-            if command.split()[0] == "clear":
+            if name == "clear":
                 os.system('cls||clear')
                 continue
 

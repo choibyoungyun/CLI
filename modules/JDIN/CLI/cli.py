@@ -27,6 +27,7 @@ class CLIHelp ():
     def help_list (self, dictionary):
         path      = os.path.dirname(dictionary.get_pod_fname())
         file_list = os.listdir (path)
+        file_list.sort()
 
         response  = dictionary.get_pod_response_body()
         short = response['BRIEF']
