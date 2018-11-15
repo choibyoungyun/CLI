@@ -4,6 +4,7 @@ import asyncio
 import logging
 import json
 import struct
+import time
 from abc import *
 from JDIN import util
 from JDIN.CLI import pod
@@ -92,12 +93,20 @@ class EMSProtocol ():
 
 class EMSClient ():
 
-    def __init__(self, ip, port, server_type = "COMMAND"):
+    def __init__(self, ip, port, server_type = "COMMAND", event_loop=None):
         self.__type     = server_type
+        self.__loop     = event_loop
         self.__addr     = (ip, port)
         self.__protocol = EMSProtocol(ip, port)
+
+        # EMS Transaction Protocol Key
         self.__key      = 0
+
+        # Pending Queue for request messages
+        self.__qtick    = 5
+        self.__qtimer   = None
         self.__queue    = util.PendingQueue()
+        self.__queue.set_expire_tick (self.__qtick)
 
         self.__pod      = pod.CommandDictionary()
         self.__clients  = set()
@@ -111,6 +120,10 @@ class EMSClient ():
                 .format(self.get_addr(), ex)
         trace.error (err)
         return return_value, err
+
+    def set_expire_tick (self, tick):
+        self.__qtick = tick
+        self.__queue.set_expire_tick (self.__qtick)
 
     def get_addr (self):
         return self.__addr
@@ -133,35 +146,36 @@ class EMSClient ():
 
 
     async def recv (self):
-        in_string, err = await self.__protocol.recv()
-        if in_string is None:
-            return self.__internal_exception(err, None)
-
         try :
-            msg = json.loads(in_string)
-            rkey = msg ['header']['Key']
-            try :
-                index, item = self.__queue.select (rkey)
-            except Exception as ex:
-                return self.__internal_exception(ex, None)
+            while True:
+                in_string, err = await self.__protocol.recv()
+                if in_string is None:
+                    return self.__internal_exception(err, None)
 
-            if item is None :
-                trace.error ("fail, {0} not found req   [key:{0}]"\
-                            .format(self.get_addr(), rkey))
-                trace.error ("fail, {0} discard message [key:{0}]"\
-                            .format(self.get_addr(), rkey))
-            else:
-                e_code, err = self.__queue.delete (index)
-                if e_code is not True:
-                    return self.__internal_exception (err, None)
-                else :
-                    key = item['value']['dictionay'].get_pod_response_key()
-                    item ['value']['dictionay'].set_pod_response_raw (\
-                            json.dumps(msg, indent=2))
-                    item ['value']['dictionay'].set_pod_response (msg)
-                    item ['value']['dictionay'].set_pod_response_key (key)
+                msg = json.loads(in_string)
+                rkey = msg ['header']['Key']
+                try :
+                    index, item = self.__queue.select (rkey)
+                except Exception as ex:
+                    return self.__internal_exception(ex, None)
 
-            return item, None
+                if item is None :
+                    trace.error ("fail, {0} not found req   [key:{0}]"\
+                                .format(self.get_addr(), rkey))
+                    trace.error ("fail, {0} discard message [key:{0}]"\
+                                .format(self.get_addr(), rkey))
+                    continue
+                else:
+                    e_code, err = self.__queue.delete (index)
+                    if e_code is not True:
+                        return self.__internal_exception (err, None)
+                    else :
+                        key = item['dictionary'].get_pod_response_key()
+                        item ['dictionary'].set_pod_response_raw (\
+                                                        json.dumps(msg, indent=2))
+                        item ['dictionary'].set_pod_response (msg)
+                        item ['dictionary'].set_pod_response_key (key)
+                return item, None
         except Exception as ex:
             return self.__internal_exception(ex, None)
 
@@ -176,10 +190,10 @@ class EMSClient ():
             # store message for transaction
             #
             key = self.__get_key()
-            item = dict()
-            item['key']   = key
-            item['value'] = {'client':client, 'dictionay':command_dict}
-            e_code, err_string = self.__queue.insert (item)
+            e_code, err_string = \
+                    self.__queue.insert (key,                             \
+                                         {'client'    :client,             \
+                                          'dictionary':command_dict})
             if e_code is not True:
                 return self.__internal_exception (err_string, False)
 
@@ -213,16 +227,32 @@ class EMSClient ():
         except Exception as ex:
             trace.error (ex)
 
+    async def __handle_command_timer(self):
+        trace.debug ("info, startup command timer")
+        while True:
+            await asyncio.sleep(1)
+            while True:
+                index, item = \
+                        self.__queue.select_timer_expired (int(time.time()))
+                if item is None:
+                    break
+                else:
+                    self.__queue.delete (index)
+                    item['dictionary'].set_pod_response_result(999)
+                    item['dictionary'].set_pod_error_string(\
+                    "webif timer expired [sec:{0}]".format(self.__qtick))
+                    item['dictionary'].set_pod_response_raw("")
+                    item['dictionary'].set_pod_response_null()
+                    await item['client'].response (item['dictionary'])
+
+
     async def __handle_command  (self):
         trace.critical ("info, {0} startup {1} handle"\
                 .format (self.get_addr(), self.__type))
         try :
             while True:
                 item, err = await self.recv ()
-                client    = item['value']['client']
-                dictionay = item['value']['dictionay']
-
-                await client.response (dictionay)
+                await item['client'].response (item['dictionary'])
         except Exception as ex:
             pass
 
@@ -297,7 +327,7 @@ class EMSClient ():
                .format(self.get_addr(), type(ex).__name__, ex.args))
 
 
-    async def start_client (self):
+    async def start_client (self, loop = None):
         try:
             while True:
                 e_code = await self.open()
@@ -305,6 +335,9 @@ class EMSClient ():
                     await asyncio.sleep (1.0)
                     continue
                 if self.__type == "COMMAND":
+                    if self.__qtimer is None:
+                        self.__qtimer = \
+                                loop.create_task (self.__handle_command_timer())
                     await self.__handle_command ()
                 else :
                     await self.__handle_notify ()

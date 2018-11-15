@@ -282,6 +282,7 @@ class OPJob ():
         self.__operator_ip     = None
         self.__operator_system = None
 
+        self.__command_wtick   = 5
         self.__command_ip      = "127.0.0.1"
         self.__command_port    = 5757
         self.__command_system  = None
@@ -322,6 +323,10 @@ class OPJob ():
         self.__command_port   = self.__config.get ("COMMAND", "PORT")
         self.__command_system = ems.EMSClient (self.__command_ip, \
                                                self.__command_port)
+        self.__command_wtick  = self.__config.get ("COMMAND", "WAIT_TICK")
+        if self.__command_wtick is None:
+            self.__command_wtick = 5
+        self.__command_system.set_expire_tick(int(self.__command_wtick))
 
         self.__trace_ip     = self.__config.get ("TRACE", "IP")
         self.__trace_port   = self.__config.get ("TRACE", "PORT")
@@ -376,7 +381,7 @@ class OPJob ():
         #instance.do_job(self.__event_loop)
 
     async def __run_client (self):
-        coros = [task.start_client() for task in self.__tasks]
+        coros = [task.start_client(self.__event_loop) for task in self.__tasks]
         await asyncio.gather (*coros)
 
     def do_client_job (self):

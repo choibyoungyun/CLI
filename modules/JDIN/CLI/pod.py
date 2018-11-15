@@ -332,6 +332,9 @@ class CommandDictionary ():
             return False
         return self.set_pod_notify (response)
 
+    def set_pod_response_null(self):
+        self.__root[POD_KEYWORD_RESPONSE][POD_KEYWORD_BODY] = ""
+
     def get_pod_response_raw (self):
         return self.__root['raw_response']
     def set_pod_response_raw (self, message):
