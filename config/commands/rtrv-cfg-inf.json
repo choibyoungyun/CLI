@@ -1,0 +1,121 @@
+{
+    "name"     : "RTRV-CFG-INF",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10282,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA"  : {"mandatory":"TRUE",  "type": "int"},
+            "BLOCK" : {"mandatory":"FALSE", "type": "string"},
+            "NAME"  : {"mandatory":"FALSE", "type": "string"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10282,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""},
+            "array"   : [{"AREAID"       : {"type":"int",    "default":-1},
+                          "BLOCK"        : {"type":"string", "default":"-"},
+                          "NAME"         : {"type":"string", "default":"-"},
+                          "VAL_TYPE"     : {"type":"int",    "default":-1},
+                          "VAL_STR"      : {"type":"string", "default":"-"},
+                          "VAL_INT"      : {"type":"int",    "default":-1},
+                          "MIN_VALUE"    : {"type":"int",    "default":-1},
+                          "MAX_VALUE"    : {"type":"int",    "default":-1},
+                          "DEFAULT_VALUE": {"type":"string", "default":"-"},
+                          "UNIT"         : {"type":"string", "default":"-"},
+                          "MEMO"         : {"type":"string", "default":"-"}}]
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "AREA(I), [BLOCK], [NAME]",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------------------------\n",
+            "comment2" : "\tUsage      : RTRV-CFG-INF : AREA=num, [BLOCK=string], [NAME=string]  \n",
+            "comment3" : "\tAREA       : area index    (INT,    MANDATORY)\n",
+            "comment4" : "\tBLOCK      : BLOCK NAME(?) (STRING, OPTIONAL)\n",
+            "comment5" : "\tNAME       : CFG NAME(?)   (STRING, OPTIONAL)\n",
+            "comment8" : "\t---------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL0": "AREAID",
+                      "COL1": "BLOCK",
+                      "COL2": "NAME",
+                      "COL3": "VAL_TYPE",
+                      "COL4": "VAL_STR",
+                      "COL5": "VAL_INT",
+                      "COL6": "MIN_VALUE",
+                      "COL7": "MAX_VALUE",
+                      "COL8": "DEFAULT_VALUE",
+                      "COL9": "UNIT",
+                      "COL10": "MEMO"
+         },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>8s} {1:>8s} {2:>8s} {3:>8s} {4:>8s} {5:>8s} {6:>10s} {7:>10s} {8:>16s} {9:>8s} {10:>s}\n",
+                          "value"  : "display.field.COL0,
+                                      display.field.COL1,
+                                      display.field.COL2,
+                                      display.field.COL3,
+                                      display.field.COL4,
+                                      display.field.COL5,
+                                      display.field.COL6,
+                                      display.field.COL7,
+                                      display.field.COL8,
+                                      display.field.COL9,
+                                      display.field.COL10"
+                         },
+            "comment3" : "\t--------------------------------------------------------\n",
+            "table1" : {
+                "name"   : "response.body.array",
+                "line1"  : {
+                    "format" : "\t{0:>8d} {1:>8s} {2:>8s} {3:>8d} {4:>8s} {5:>8d} {6:>10d} {7:>10d} {8:>16s} {9:>8s} {10:>s}\n",
+                    "value"  : "response.body.array.AREAID,
+                                response.body.array.BLOCK,
+                                response.body.array.NAME,
+                                response.body.array.VAL_TYPE,
+                                response.body.array.VAL_STR,
+                                response.body.array.VAL_INT,
+                                response.body.array.MIN_VALUE,
+                                response.body.array.MAX_VALUE,
+                                response.body.array.DEFAULT_VALUE,
+                                response.body.array.UNIT,
+                                response.body.array.MEMO"
+                }
+            },
+            "comment8" : "\t--------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

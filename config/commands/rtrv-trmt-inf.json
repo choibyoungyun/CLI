@@ -89,8 +89,8 @@
             "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
             "comment1" : "\t--------------------------------------------------------------------\n",
             "line2"    : {
-                "format" : "\tERROR : {0}, {1}\n",
-                "value"  : "response.body.INFO, $ERROR" 
+                "format" : "\tERROR : {0}, {1}  [response_result: {2}]\n",
+                "value"  : "response.body.INFO, $ERROR, response.header.result"
             },
             "comment2" : "\t--------------------------------------------------------------------\n",
             "comment9" : "COMPLETED \n"
