@@ -28,6 +28,7 @@
         },
 
         "body"  : {
+            "INFO"    : {"type":"string", "default":""},
             "array"   : [{"AREA" : 1,
                           "GRP_NAME" : "APSG0",
                           "GRP_NO" : 4183,
@@ -71,10 +72,15 @@
         },
 
         "failure" :  {
-            "line"  : {
-                "format" : "{0}",
-                "value"  : "$MESSAGE"
-            }
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}, {2}\n",
+                "value"  : "response.body.INFO, $ERROR, $RAW_RESPONSE"
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
         }
     }
 }

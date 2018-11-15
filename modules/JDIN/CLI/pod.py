@@ -258,6 +258,10 @@ class CommandDictionary ():
         e_code     = True
         err_string = ""
         value      = None
+
+        if POD_KEYWORD_BODY not in self.__root[POD_KEYWORD_REQUEST].keys():
+            return True
+
         template   = self.__root[POD_KEYWORD_REQUEST][POD_KEYWORD_BODY]
         remove_key = list()
 
@@ -330,6 +334,11 @@ class CommandDictionary ():
             self.__error_string += "fail, not found response result field"
             trace.error (self.__error_string)
             return False
+
+        if POD_KEYWORD_BODY not in response.keys():
+            self.set_pod_response_null()
+            return True
+
         return self.set_pod_notify (response)
 
     def set_pod_response_null(self):

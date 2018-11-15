@@ -9,8 +9,8 @@
         },
 
         "body"  : {
-            "AREA": {"mandatory":"TRUE",  "type": "int"},
-            "NODE": {"mandatory":"FALSE", "type": "string", "default":"3"}
+            "AREA": {"mandatory":"FALSE",  "type": "int"},
+            "NODE": {"mandatory":"FALSE",  "type": "string"}
         }
     },
 
@@ -32,15 +32,17 @@
     },
 
     "display" : {
-        "help_brief"   : "AREA(I),[NAME]",
+        "help_brief"   : "[AREA(I)],[NODE]",
         "help_detail"  : {
             "line1"    : {"format" : "{0}    {1}\n",
                           "value"  : "$NODE_NAME, $TIME"},
             "comment1" : "\t--------------------------------------------\n",
-            "comment2" : "\tUsage      : RTRV-NODE-GRP : AREA=num, [NAME]\n",
-            "comment3" : "\tAREA       : TAS AREA INDEX \n",
-            "comment4" : "\t--------------------------------------------\n",
-            "comment9" : "COMPLETED \n"
+            "comment2" : "\tUsage      : RTRV-NODE-GRP : [AREA=num], [NODE=string]\n",
+            "comment3" : "\t--------------------------------------------\n",
+            "comment4" : "\tAREA       : area identifier [INT,    OPTIONAL]\n",
+            "comment5" : "\tNODE       : node name       [STRING, OPTIONAL]\n",
+            "comment9" : "\t--------------------------------------------\n",
+            "comment10": "COMPLETED \n"
         },
 
 

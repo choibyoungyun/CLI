@@ -44,10 +44,11 @@
                           "value"  : "$NODE_NAME, $TIME"},
             "comment1" : "\t---------------------------------------------------------------\n",
             "comment2" : "\tUsage      : RTRV-EVENT-THR : [AREA=num],[TYPE=SEC],[EVENT=num]\n",
-            "comment3" : "\tAREA       : AREA INDEX \n",
-            "comment4" : "\tTYPE       : SEC        \n",
-            "comment5" : "\tEVENT      : INVITE(0)|SUBSCRIBE(1)|REFER(2)|PUBLISH(3)|MESSAGE(4)|REGISTER(5)\n",
-            "comment6" : "\t---------------------------------------------------------------\n",
+            "comment3" : "\t---------------------------------------------------------------\n",
+            "comment4" : "\tAREA       : AREA INDEX \n",
+            "comment5" : "\tTYPE       : SEC        \n",
+            "comment6" : "\tEVENT      : INVITE(0)|SUBSCRIBE(1)|REFER(2)|PUBLISH(3)|MESSAGE(4)|REGISTER(5)\n",
+            "comment8" : "\t---------------------------------------------------------------\n",
             "comment9" : "COMPLETED \n"
         },
 
