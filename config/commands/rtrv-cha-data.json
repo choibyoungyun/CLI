@@ -1,0 +1,105 @@
+{
+    "name"     : "RTRV-CHA-DATA",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10014,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "TYPE"  : {"mandatory":"FALSE",  "type": "string",
+                       "constraints" : {"enum": "TMP,PRM,BKP"}},
+
+            "GRP"   : {"mandatory":"FALSE", "type": "string"},
+            "DIR"   : {"mandatory":"FALSE", "type": "string"},
+            "IDX"   : {"mandatory":"FALSE", "type": "int"},
+            "FCNT"  : {"mandatory":"FALSE", "type": "string"},
+            "CNT"   : {"mandatory":"FALSE", "type": "string"},
+            "LVL"   : {"mandatory":"FALSE", "type": "int"},
+            "UNAME" : {"mandatory":"FALSE", "type": "string"},
+            "CG"    : {"mandatory":"FALSE", "type": "string"},
+            "CD"    : {"mandatory":"FALSE", "type": "string"},
+            "RT"    : {"mandatory":"FALSE",  "type": "string",
+                       "constraints" : {"enum": "EVENT,START,INTERIM,STOP"}},
+            "ROLE"  : {"mandatory":"FALSE",  "type": "string",
+                       "constraints" : {"enum": "ORIG,TERM"}},
+            "CC"    : {"mandatory":"FALSE", "type": "string"},
+            "ICID"  : {"mandatory":"FALSE", "type": "string"},
+            "SSID"  : {"mandatory":"FALSE", "type": "string"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10014,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""}
+        }
+    },
+
+    "display" : {
+        "help_brief"    : "[TYPE],[GRP],[DIR],[IDX(I)], .....more",
+        "help_detail"   : {
+            "line1"     : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment1"  : "\t----------------------------------------------------------------\n",
+            "comment2"  : "\tUsage      : RTRV-CHA-CDR  :  [TYPE], [GRP], [DIR], [IDX], [FCNT], [CNT], [LVL(I)], [UNAME], [CG], [CD], [RT=EVENT/START/INTERIM/STOP], [ROLE=ORIG/TERM], [CC], [ICID], [SSID]\n",
+            "comment3"  : "\t----------------------------------------------------------------\n",
+            "comment4"  : "\tTYPE       : TMP/PRM/BKP              [ENUM(STRING),    OPTIONAL] \n",
+            "comment5"  : "\tGRP        : value                    [STRING,          OPTIONAL] \n",
+            "comment6"  : "\tDIR        : value                    [STRING,          OPTIONAL] \n",
+            "comment7"  : "\tIDX        : value                    [STRING,          OPTIONAL] \n",
+            "comment8"  : "\tFCNT       : value                    [STRING,          OPTIONAL] \n",
+            "comment9"  : "\tCNT        : value                    [INT   ,          OPTIONAL] \n",
+            "comment11" : "\tLVL        : value                    [INT,             OPTIONAL] \n",
+            "comment12" : "\tUNAME      : value                    [STRING,          OPTIONAL] \n",
+            "comment13" : "\tCG         : value                    [STRING,          OPTIONAL] \n",
+            "comment14" : "\tCD         : value                    [STRING,          OPTIONAL] \n",
+            "comment15" : "\tRT         : EVENT/START/INTERIM/STOP [ENUM(STRING),    OPTIONAL] \n",
+            "comment16" : "\tROLE       : ORIG/TERM                [ENUM(STRING),    OPTIONAL] \n",
+            "comment17" : "\tCC         : value                    [STRING,          OPTIONAL] \n",
+            "comment18" : "\tICID       : value                    [STRING,          OPTIONAL] \n",
+            "comment19" : "\tSSID       : value                    [STRING,          OPTIONAL] \n",
+            "comment98" : "\t----------------------------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL0" : "HEADER FILED" },
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>s}",
+                          "value"  : "display.field.COL0"
+                         },
+            "comment3" : "\t---------------------------------------------------------------\n",
+            "line3"    : {
+                          "format" : "\t{0:>s}",
+                          "value"  : "$RAW_RESPONSE"
+                         },
+
+            "comment8" : "\t---------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}, {2}\n",
+                "value"  : "response.body.INFO, $ERROR, $RAW_RESPONSE"
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

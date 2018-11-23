@@ -1,9 +1,9 @@
 {
-    "name" : "1600",
+    "name" : "1101",
     "request" : {
         "header" : {
             "MsgType" : 1,
-            "CmdID"   : 1600,
+            "CmdID"   : 1101,
             "Key"     : 0
         },
 
@@ -14,15 +14,15 @@
     "response" : {
         "header" : {
             "MsgType" : 0,
-            "CmdID"   : 1600,
+            "CmdID"   : 1101,
             "Key"     : 0,
             "result"  : 0
         },
 
         "body"  : {
-            "LOC"   : {"type" : "string", "default": "-"},
-            "INF"   : {"type" : "string", "default": "-"},
-            "ALM_ON": {"type" : "string", "default": "-"}
+            "LOC"  : {"type" : "string", "default" : "-"},
+            "INF"  : {"type" : "string", "default" : "-"},
+            "EXT3" : {"type" : "string", "default" : "-"}
         }
     },
 
@@ -31,20 +31,22 @@
             "comment1" : "\t SERVER REPORT\n"
         },
 
-        "field"   : { "COL1": "LOC", "COL2":"INF", "COL3":"ALM_ON"},
+        "field"   : { "COL1": "LOC",
+                      "COL2": "INF",
+                      "COL3": "EXT3"},
         "success" : {
             "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
             "comment1" : "\t---------------------------------------------\n",
-            "line2"    : {"format" : "\t{0:<6s} {1:<10s} {2:<20s}\n",
+            "line2"    : {"format" : "\t{0:<6s} {1:<10s} {2:<10s} \n",
                           "value"  : "display.field.COL1,
                                       display.field.COL2,
                                       display.field.COL3"},
-            "comment3" : "\t---------------------------------------------\n",
-            "line3"    : {"format" : "\t{0:<6s} {1:<10s} {2:<20s}\n",
+            "comment2" : "\t---------------------------------------------\n",
+            "line3"    : {"format" : "\t{0:<6s} {1:<10s} {2:<10s} \n",
                           "value"  : "response.body.LOC,
                                       response.body.INF,
-                                      response.body.ALM_ON"},
-            "comment4" : "\t---------------------------------------------\n",
+                                      response.body.EXT3"},
+            "comment3" : "\t---------------------------------------------\n",
             "comment9" : "COMPLETED \n"
         },
 

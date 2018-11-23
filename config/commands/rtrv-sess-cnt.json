@@ -41,9 +41,9 @@
             "line1"    : {"format" : "{0}    {1}\n",
                           "value"  : "$NODE_NAME, $TIME"},
             "comment1" : "\t--------------------------------------------\n",
-            "comment2" : "\tUsage      : RTRV-SESS-CNT : [AREA=value1], [NODE=value2]\n",
-            "comment3" : "\tAREA       : NUMBER OF AREA\n",
-            "comment3" : "\tNODE       : NODE NAME\n",
+            "comment2" : "\tUsage      : RTRV-SESS-CNT : [AREA=num], [NODE=string]\n",
+            "comment3" : "\tAREA       : NUMBER OF AREA [INT,    OPTIONAL]\n",
+            "comment3" : "\tNODE       : NODE NAME      [STRING, OPTIONAL]\n",
             "comment4" : "\t--------------------------------------------\n",
             "comment9" : "COMPLETED \n"
         },

@@ -23,9 +23,9 @@
         },
 
         "body"  : {
-            "LOC"  : "loc", 
-            "INF"  : "inf",
-            "EXT3" : {"default":"OFF"}
+            "LOC"  : {"type" : "string", "default" : "-"},
+            "INF"  : {"type" : "string", "default" : "-"},
+            "EXT3" : {"type" : "string", "default" : "-"}
         }
     },
 
@@ -33,8 +33,8 @@
         "help"   : {
             "comment1" : "\t SERVER REPORT\n"
         },
-        "field"   : { "COL1": "LOC", 
-                      "COL2": "INF", 
+        "field"   : { "COL1": "LOC",
+                      "COL2": "INF",
                       "COL3": "EXT3"},
         "success" : {
             "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},

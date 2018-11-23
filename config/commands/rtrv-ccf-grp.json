@@ -22,6 +22,7 @@
         },
 
         "body"  : {
+            "INFO"    : {"type":"string", "default":""},
             "array"   : [{"AREA"      : {"type":"int",    "default": "-1"},
                           "GRP_NAME"  : {"type":"string", "default": "NONE"},
                           "GRP_NO"    : {"type":"int",    "default": "-1"},
@@ -65,10 +66,15 @@
         },
 
         "failure" :  {
-            "line"  : {
-                "format" : "{0}",
-                "value"  : "$RAW_RESPONSE"
-            }
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR"
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
         }
     }
 }

@@ -58,8 +58,8 @@ class ExtendFileHandler (TimedRotatingFileHandler, RotatingFileHandler):
         fname = os.path.basename (self.baseFilename)
         pname = fname.split('_')[0]
 
-        return dname + "/" + pname + "_" \
-                + datetime.today().strftime("%Y%m%d") + ".log"
+        return dname + "/" + pname + ".log." \
+                + datetime.today().strftime("%Y%m%d")
 
     def doRollover(self):
         # get from logging.handlers.TimedRotatingFileHandler.doRollover()
@@ -160,8 +160,8 @@ class Logger ():
             except Exception as ex:
                 trace.error (ex)
                 return None
-        self.__fname = dir_name + "/" + self.__pname + "_" \
-                        + datetime.today().strftime("%Y%m%d") + ".log"
+        self.__fname = dir_name + "/" + self.__pname + ".log." \
+                + datetime.today().strftime("%Y%m%d")
 
     def set_file (self):
         self.set_file_name()

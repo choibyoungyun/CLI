@@ -1,0 +1,86 @@
+{
+    "name"     : "RTRV-PROT-TRC",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10255,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "NO"    : {"mandatory":"FALSE",  "type": "string"},
+            "IMPU"  : {"mandatory":"FALSE",  "type": "string"},
+            "TMGI"  : {"mandatory":"FALSE",  "type": "string"},
+            "FID"   : {"mandatory":"FALSE",  "type": "string"},
+            "NE"    : {"mandatory":"FALSE",  "type": "string"},
+            "NEID"  : {"mandatory":"FALSE",  "type": "string"},
+            "PROT"  : {"mandatory":"FALSE",  "type": "string"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10255,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""}
+         }
+    },
+
+    "display" : {
+        "help_brief"    : "[NO],[IMPU],[TMGI],[FID],[NE],[NEID],[PROT]",
+        "help_detail"   : {
+            "line1"     : {"format" : "{0}    {1}\n",
+                           "value"  : "$NODE_NAME, $TIME"},
+            "comment1"  : "\t----------------------------------------------------------------\n",
+            "comment2"  : "\tUsage      : RTRV-PROT-TRC : [NO=string], [IMPU=string], [TMGI=string], [FID=string], [NE=string], [NEID=string], [PROT=string]\n",
+            "comment3"  : "\t----------------------------------------------------------------\n",
+            "comment4"  : "\tNO         : number          [STRING,       OPTIONAL]\n",
+            "comment5"  : "\tIMPU       : impu            [STRING,       OPTIONAL]\n",
+            "comment6"  : "\tTMGI       : mgiidentiier    [STRING,       OPTIONAL]\n",
+            "comment7"  : "\tFID        : fid identiier   [STRING,       OPTIONAL]\n",
+            "comment8"  : "\tNE         : ne              [STRING,       OPTIONAL]\n",
+            "comment9"  : "\tNEID       : ne identiier    [STRING,       OPTIONAL]\n",
+            "comment10" : "\tPROT       : prot            [STRING,       OPTIONAL]\n",
+            "comment98" : "\t----------------------------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL0" : "HEADER FILED" },
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t---------------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>s}",
+                          "value"  : "display.field.COL0"
+                         },
+            "comment3" : "\t---------------------------------------------------------------\n",
+            "line3"    : {
+                          "format" : "\t{0:>s}",
+                          "value"  : "$RAW_RESPONSE"
+                         },
+
+            "comment8" : "\t---------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR"
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+
+    }
+}

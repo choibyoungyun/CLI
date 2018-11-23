@@ -48,9 +48,10 @@
                           "value"  : "$NODE_NAME, $TIME"},
             "comment1" : "\t--------------------------------------------\n",
             "comment2" : "\tUsage   : RTRV-DEF-NODE  : AREA=num, NODE=string\n",
-            "comment3" : "\tAREA    : area identifier (INT,    MANDATORY)\n",
-            "comment3" : "\tNODE    : node name       (STRING, MANDATORY)\n",
-            "comment4" : "\t--------------------------------------------\n",
+            "comment3" : "\t--------------------------------------------\n",
+            "comment4" : "\tAREA    : area identifier (INT,    MANDATORY)\n",
+            "comment5" : "\tNODE    : node name       (STRING, MANDATORY)\n",
+            "comment8" : "\t--------------------------------------------\n",
             "comment9" : "COMPLETED \n"
         },
 

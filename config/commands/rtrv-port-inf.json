@@ -43,16 +43,17 @@
     },
 
     "display" : {
-        "help_brief"   : "AREA(I),NODE",
-        "help_detail"  : {
-            "line1"    : {"format" : "{0}    {1}\n",
-                          "value"  : "$NODE_NAME, $TIME"},
-            "comment1" : "\t--------------------------------------------\n",
-            "comment2" : "\tUsage      : RTRV-PORT-INF : AREA=num,NODE=string\n",
-            "comment3" : "\tAREA       : AREA INDEX (INTEGER)\n",
-            "comment4" : "\tNODE       : NODE NAME  (STRING)\n",
-            "comment8" : "\t--------------------------------------------\n",
-            "comment9" : "COMPLETED \n"
+        "help_brief"    : "AREA(I),NODE",
+        "help_detail"   : {
+            "line1"     : {"format" : "{0}    {1}\n",
+                           "value"  : "$NODE_NAME, $TIME"},
+            "comment01" : "\t--------------------------------------------\n",
+            "comment2"  : "\tUsage      : RTRV-PORT-INF : AREA=num,NODE=string\n",
+            "comment97" : "\t--------------------------------------------\n",
+            "comment3"  : "\tAREA       : AREA INDEX [INT,    MANDATORY]\n",
+            "comment4"  : "\tNODE       : NODE NAME  [STRING, MANDATORY]\n",
+            "comment98" : "\t--------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
         },
 
         "field"   : {

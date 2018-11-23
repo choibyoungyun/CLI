@@ -240,7 +240,7 @@ class EMSClient ():
                     self.__queue.delete (index)
                     item['dictionary'].set_pod_response_result(999)
                     item['dictionary'].set_pod_error_string(\
-                    "webif timer expired [sec:{0}]".format(self.__qtick))
+                    "Waiting tick for webif response is expired [tick:{0}]".format(self.__qtick))
                     item['dictionary'].set_pod_response_raw("")
                     item['dictionary'].set_pod_response_null()
                     await item['client'].response (item['dictionary'])
@@ -318,8 +318,6 @@ class EMSClient ():
                 in_string, err = await self.__protocol.recv()
                 if in_string is None:
                     break
-                trace.info ("info, {0} recv notify {1}"\
-                            .format(self.get_addr(), in_string))
                 await self.__do_notify(in_string)
                 self.__pod.reset_pod_error_string()
         except Exception as ex:

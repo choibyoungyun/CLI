@@ -274,7 +274,6 @@ class CLIClient ():
         try :
             result = None
             result = self.__set_cmd_response (dictionary)
-            trace.debug (result)
             await self.send (result)
         except Exception as ex:
             trace.error(json.dumps(dictionary.get_pod_root(), indent=2))

@@ -19,11 +19,11 @@
             "line1"    : {"format": "{0}    {1}\n",
                           "value" : "$NODE_NAME, $TIME"},
             "comment1" : "\t--------------------------------------------\n",
-            "comment2" : "\tUsage  : alarm on|off\n",
-            "comment3" : "\tON  - enable  EMS REPORT notification \n",
-            "comment4" : "\tOFF - disable EMS REPORT notification \n",
-            "comment5" : "\t--------------------------------------------\n",
-            "comment6" : "COMPLETED \n"
+            "comment2" : "\tUsage  : SET-RPT-MODE: MODE=string\n",
+            "comment3" : "\t--------------------------------------------\n",
+            "comment4" : "\tMODE   : ON/OFF [ENUM(STRING), MANDATORY]\n",
+            "comment8" : "\t--------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
         },
 
         "success" :

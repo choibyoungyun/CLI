@@ -1,0 +1,82 @@
+{
+    "name"     : "DLT-CFG-INF",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10285,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA"  : {"mandatory":"TRUE",  "type": "int"},
+            "BLOCK" : {"mandatory":"TRUE", "type": "string"},
+            "NAME"  : {"mandatory":"TRUE", "type": "string"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10285,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""},
+            "RESULT"  : {"type":"string", "default":""},
+            "REASON"  : {"type":"string", "default":""}
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "AREA(I),BLOCK,NAME",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment01" : "\t---------------------------------------------------------------\n",
+            "comment1"  : "\tUsage      : DLT-CFG-INF : AREA=num,BLOCK=string,NAME=string  \n",
+            "comment02" : "\t---------------------------------------------------------------\n",
+            "comment2"  : "\tAREA       : area index    (INT,    MANDATORY)\n",
+            "comment3"  : "\tBLOCK      : BLOCK NAME(?) (STRING, MANDATORY)\n",
+            "comment4"  : "\tNAME       : CFG NAME(?)   (STRING, MANDATORY)\n",
+            "comment98" : "\t---------------------------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL0": "RESULT",
+                      "COL1": "REASON"
+         },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>8s} {1:>8s} \n",
+                          "value"  : "display.field.COL0,
+                                      display.field.COL1"
+                         },
+            "comment3" : "\t--------------------------------------------------------\n",
+            "line3"    : {
+                "format" : "\t{0:>8s} {1:>8s} \n",
+                "value"  : "response.body.RESULT, response.body.REASON"
+            },
+            "comment8" : "\t--------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR" 
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}

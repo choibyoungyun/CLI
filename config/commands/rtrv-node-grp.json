@@ -23,11 +23,11 @@
         },
 
         "body"  : {
-            "array"   : [{"AREA"      : {"type":"int",    "default":"-1"},
-                          "GRP_NAME"  : {"type":"string", "default":"NONE"},
-                          "GRP_NO"    : {"type":"int",    "default":"-1"},
-                          "NODE_TYPE" : {"type":"string", "default":"NONE"},
-                          "REDUN_TYPE": {"type":"string", "default":"NONE"}}]
+            "array"   : [{"AREA"      : {"type":"int",    "default":-1},
+                          "GRP_NAME"  : {"type":"string", "default":"-"},
+                          "GRP_NO"    : {"type":"int",    "default":-1},
+                          "NODE_TYPE" : {"type":"string", "default":"-"},
+                          "REDUN_TYPE": {"type":"string", "default":"-"}}]
          }
     },
 

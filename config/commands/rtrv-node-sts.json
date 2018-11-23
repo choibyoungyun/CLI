@@ -35,17 +35,18 @@
     },
 
     "display" : {
-        "help_brief"   : "[AREA(I)],[NODE],[STS]",
-        "help_detail"  : {
-            "line1"    : {"format" : "{0}    {1}\n",
-                          "value"  : "$NODE_NAME, $TIME"},
-            "comment1" : "\t--------------------------------------------\n",
-            "comment2" : "\tUsage      : RTRV-NODE-STS : [AREA=num],[NODE=string],[STS=string]\n",
-            "comment3" : "\tAREA       : AREA INDEX (INTEGER)\n",
-            "comment4" : "\tNODE       : NODE NAME  (STRING)\n",
-            "comment5" : "\tSTS        : STATUS     (ALL|ENABLE|DISABLE|UNLOCK|LOCK|ALLOW|INHIBIT)\n",
-            "comment8" : "\t--------------------------------------------\n",
-            "comment9" : "COMPLETED \n"
+        "help_brief"    : "[AREA(I)],[NODE],[STS]",
+        "help_detail"   : {
+            "line1"     : {"format" : "{0}    {1}\n",
+                           "value"  : "$NODE_NAME, $TIME"},
+            "comment01" : "\t--------------------------------------------\n",
+            "comment2"  : "\tUsage      : RTRV-NODE-STS : [AREA=num],[NODE=string],[STS=string]\n",
+            "comment97" : "\t--------------------------------------------\n",
+            "comment3"  : "\tAREA       : AREA INDEX [INTEGER, OPTIONAL]\n",
+            "comment4"  : "\tNODE       : NODE NAME  [STRING,  OPTIONAL]\n",
+            "comment5"  : "\tSTS        : ALL|ENABLE|DISABLE|UNLOCK|LOCK|ALLOW|INHIBIT  [ENUM(STRING), OPTIONAL]\n",
+            "comment98" : "\t--------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
         },
 
         "field"   : { "COL0": "AREA",

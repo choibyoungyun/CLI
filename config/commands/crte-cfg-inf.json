@@ -1,0 +1,97 @@
+{
+    "name"     : "CRTE-CFG-INF",
+    "grade"    : 0,
+    "request" : {
+        "header" : {
+            "MsgType" : 1,
+            "CmdID"   : 10283,
+            "Key"     : 0
+        },
+
+        "body"  : {
+            "AREA"  : {"mandatory":"TRUE",  "type": "int"},
+            "BLOCK" : {"mandatory":"TRUE",  "type": "string"},
+            "NAME"  : {"mandatory":"TRUE",  "type": "string"},
+            "TYPE"  : {"mandatory":"TRUE",  "type": "string",
+                       "constraints" : {"enum" : "INT,STR"}},
+            "VAL"   : {"mandatory":"TRUE",  "type": "string"},
+            "MIN"   : {"mandatory":"FALSE", "type": "int"},
+            "MAX"   : {"mandatory":"FALSE", "type": "int"},
+            "DFLT"  : {"mandatory":"FALSE", "type": "string"},
+            "UNIT"  : {"mandatory":"FALSE", "type": "string"},
+            "DESC"  : {"mandatory":"FALSE", "type": "string"}
+        }
+    },
+
+    "response" : {
+        "header" : {
+            "MsgType" : 0,
+            "CmdID"   : 10283,
+            "Key"     : 0,
+            "result"  : 0
+        },
+
+        "body"  : {
+            "INFO"    : {"type":"string", "default":""},
+            "RESULT"  : {"type":"string", "default":""},
+            "REASON"  : {"type":"string", "default":""}
+         }
+    },
+
+    "display" : {
+        "help_brief"   : "AREA(I),BLOCK,NAME,TYPE,VAL, ...",
+        "help_detail"  : {
+            "line1"    : {"format" : "{0}    {1}\n",
+                          "value"  : "$NODE_NAME, $TIME"},
+            "comment01" : "\t---------------------------------------------------------------\n",
+            "comment1"  : "\tUsage      : CRTE-CFG-INF : AREA=num,BLOCK=string,NAME=string,TYPE=enum,VAL=string,MIN=int,MAX=int,DFLT=string,UNIT=string,DESC=string  \n",
+            "comment02" : "\t---------------------------------------------------------------\n",
+            "comment2"  : "\tAREA       : area index    [INT,          MANDATORY]\n",
+            "comment3"  : "\tBLOCK      : BLOCK NAME    [STRING,       MANDATORY]\n",
+            "comment4"  : "\tNAME       : NAME          [STRING,       MANDATORY]\n",
+            "comment5"  : "\tTYPE       : INT/STR       [ENUM(STRING), MANDATORY]\n",
+            "comment6"  : "\tVAL        : VAL           [STRING,       MANDATORY]\n",
+            "comment7"  : "\tMIN        : MIN           [STRING,       OPTIONAL]\n",
+            "comment8"  : "\tMAX        : MAX           [STRING,       OPTIONAL]\n",
+            "comment9"  : "\tDFLT       : DEFAULT       [STRING,       OPTIONAL]\n",
+            "comment10" : "\tUNIT       : UNIT          [STRING,       OPTIONAL]\n",
+            "comment11" : "\tDESC       : DESC          [STRING,       OPTIONAL]\n",
+            "comment98" : "\t---------------------------------------------------------------\n",
+            "comment99" : "COMPLETED \n"
+        },
+
+        "field"   : { "COL0": "RESULT",
+                      "COL1": "REASON"
+         },
+
+        "success" : {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0} {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------\n",
+            "line2"    : {
+                          "format" : "\t{0:>8s} {1:>8s}\n",
+                          "value"  : "display.field.COL0,
+                                      display.field.COL1"
+                         },
+            "comment3" : "\t--------------------------------------------------------\n",
+            "line3"    : {
+                "format" : "\t{0:>8s} {1:>8s} \n",
+                "value"  : "response.body.RESULT, response.body.REASON"
+            },
+            "comment8" : "\t--------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        },
+
+        "failure" :  {
+            "comment0" : "\n",
+            "line1"    : {"format" : "{0}    {1}\n", "value" : "$NODE_NAME, $TIME"},
+            "comment1" : "\t--------------------------------------------------------------------\n",
+            "line2"    : {
+                "format" : "\tERROR : {0}, {1}\n",
+                "value"  : "response.body.INFO, $ERROR"
+            },
+            "comment2" : "\t--------------------------------------------------------------------\n",
+            "comment9" : "COMPLETED \n"
+        }
+    }
+}
