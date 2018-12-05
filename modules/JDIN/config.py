@@ -9,8 +9,9 @@ trace = logging.getLogger(__name__)
 
 class ConfigFile ():
     def __init__ (self):
-        self.__instance = None
-        self.__fname    = None
+        self.__instance   = None
+        self.__fname      = None
+        self.__dictionary = dict()
 
     def open (self, fname):
         self.__fname = fname
@@ -28,6 +29,11 @@ class ConfigFile ():
             value = self.__instance.get(section, field)
             if value is None:
                 value = default
+
+            # convert HEX to INTEGER
+            if value.startswith('0x') :
+                value = str(int (value,16))
+
             return value
         except Exception as ex:
             err_string = "name:{0}, args:{1}"\
@@ -35,6 +41,15 @@ class ConfigFile ():
             trace.error (err_string)
             return None
 
+    def load (self):
+        for section in self.__instance.sections():
+            self.__dictionary[section] = {}
+            for option in self.__instance.options(section):
+                self.__dictionary[section][option] = self.get (section, option)
+
+
+    def get_dictionary (self):
+        return self.__dictionary
 
 
 def __test_main():

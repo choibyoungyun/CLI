@@ -9,17 +9,23 @@ from datetime import datetime
 from JDIN import config
 from JDIN import util
 
-trace  =  logging.getLogger(__name__)
+trace = logging.getLogger(__name__)
+
 
 def init_logger ():
-
+    """
+    name : init_logger
+    desc : alloc default root logger
+    """
+    log = logging.getLogger()
     formatter = logging.Formatter ("[%(asctime)s] [%(levelname).1s]" + \
                                    "[%(module)s:%(lineno)04d] %(message)s",\
                                    datefmt="%Y-%m-%d %H:%M:%S")
     stream_handle = logging.StreamHandler()
     stream_handle.setFormatter(formatter)
-    stream_handle.setLevel (logging.DEBUG)
-    trace.addHandler(stream_handle)
+    log.addHandler(stream_handle)
+    log.setLevel (logging.DEBUG)
+    return log
 
 
 class ExtendFileHandler (TimedRotatingFileHandler, RotatingFileHandler):
@@ -46,8 +52,7 @@ class ExtendFileHandler (TimedRotatingFileHandler, RotatingFileHandler):
     def isTimedRollover (self):
         fname = os.path.basename (self.baseFilename)
 
-        tmp = fname.split('_')[1]
-        fdate = tmp.split('.')[0]
+        fdate = fname.split('.')[2]
         today = datetime.today().strftime("%Y%m%d")
         if fdate == today :
             return False
@@ -56,7 +61,7 @@ class ExtendFileHandler (TimedRotatingFileHandler, RotatingFileHandler):
     def getBaseFileName (self):
         dname = os.path.dirname (self.baseFilename)
         fname = os.path.basename (self.baseFilename)
-        pname = fname.split('_')[0]
+        pname = fname.split('.')[0]
 
         return dname + "/" + pname + ".log." \
                 + datetime.today().strftime("%Y%m%d")
